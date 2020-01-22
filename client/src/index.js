@@ -19,7 +19,8 @@ import event from './reducers/event/';
 import eventRoutes from './routes/event';
 import user from './reducers/user/';
 import userRoutes from './routes/user';
-import Welcome from './Welcome';
+import './app.scss';
+import HomePage from "./pages/HomePage";
 
 const history = createBrowserHistory();
 const store = createStore(
@@ -37,7 +38,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={Welcome} strict={true} exact={true}/>
+        <Route path="/" component={HomePage} strict={true} exact={true}/>
         { userRoutes }
         { eventRoutes }
         <Route render={() => <h1>Not Found</h1>} />

@@ -1,0 +1,61 @@
+@import './assets/scss/variables.scss';
+
+body {
+    background-color: $secondary-color;
+    color: white;
+}
+li {
+    list-style-type: none;
+    white-space: nowrap;
+}
+button {
+    white-space: nowrap;
+}
+a {
+    color: inherit;
+    font-weight: bold;
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+button:focus {
+    outline: none;
+}
+.font-size-3 {
+    font-size: 1.875rem !important;
+    line-height: 2.4rem !important;
+}
+.color-primary {
+    color: $primary-color;
+}
+.ap-input {
+    border: none;
+    border-bottom: 1px solid
+    white;
+    background:
+        transparent;
+    color:
+        white;
+}
+.ap-name {
+    color: $secondary-color;
+}
+.ap-address {
+    color: $secondary-color;
+}
+.ap-suggestion-icon {
+    fill: $secondary-color;
+}
+@media screen and (max-width: 640px) {
+    .MuiCard-root {
+        min-height: auto !important;
+    }
+}
+.leaflet-container {
+    height: 400px;
+    max-width: 100%;
+}
+.leaflet-pane {
+    width: 100%;
+}
