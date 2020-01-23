@@ -93,9 +93,11 @@ const SearchEvent = () => {
                 language: 'fr',
                 countries: ['fr'],
                 type: 'address',
+                useDeviceLocation: true
               }}
 
               onChange={({query, rawAnswer, suggestion, suggestionIndex}) => {
+                console.log("change")
                 handleUserPositionSelected(suggestion.latlng)
               }}
               onSuggestions={({rawAnswer, query, suggestions}) => {}}
@@ -109,7 +111,6 @@ const SearchEvent = () => {
       </div>
 
 
-      <div className="events-container">
         {!calculatingNearestEvents &&
           <Events
             events={events}
@@ -117,7 +118,6 @@ const SearchEvent = () => {
             userPosition={userPosition}
           />
         }
-      </div>
     </>
   )
 };

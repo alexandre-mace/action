@@ -54,7 +54,6 @@ button:focus {
     position: absolute;
     border-radius: 10px;
     z-index: 10000;
-    background-color: white;
     top: 60px;
     left: 15px;
     width: calc(100% - 30px);
@@ -79,6 +78,10 @@ button:focus {
 }
 .ap-suggestion-icon {
     fill: $secondary-color;
+}
+.algolia-places {
+    background-color: white;
+    border-radius: 10px;
 }
 @media screen and (max-width: 640px) {
     .MuiCard-root {

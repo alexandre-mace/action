@@ -15,20 +15,50 @@ const styles = {
 };
 
 const Events = (props) => (
-  <SwipeableViews onChangeIndex={props.handleEventSelected} style={styles.root} slideStyle={styles.slideContainer}>
-    {props.events.map((event, index) => (
-      <div className={"h-100 py-30 pr-3"} key={index} style={Object.assign({}, styles.slide)}>
-        <EventCard
-          handleEventSelected={props.handleEventSelected}
-          event={event}
-          distance={
-            props.userPosition
-              ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))
-              : false
-          }
-        />
+  <>
+    {/* mobile */}
+    <div className="d-block d-md-none">
+      <div className="events-container">
+
+        <SwipeableViews onChangeIndex={props.handleEventSelected} style={styles.root} slideStyle={styles.slideContainer}>
+          {props.events.map((event, index) => (
+            <div className={"h-100 py-30 pr-3"} key={index} style={Object.assign({}, styles.slide)}>
+              <EventCard
+                handleEventSelected={props.handleEventSelected}
+                event={event}
+                distance={
+                  props.userPosition
+                    ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))
+                    : false
+                }
+              />
+            </div>
+          ))}
+        </SwipeableViews>
       </div>
-    ))}
-  </SwipeableViews>
+
+    </div>
+
+    {/* desktop */}
+    <div className="d-none d-md-block">
+      <div className="container">
+        <div className="row">
+          {props.events.map((event, index) => (
+            <div className={"col-4 mt-3"} key={index}>
+              <EventCard
+                handleEventSelected={props.handleEventSelected}
+                event={event}
+                distance={
+                  props.userPosition
+                    ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))
+                    : false
+                }
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </>
 );
 export default Events
