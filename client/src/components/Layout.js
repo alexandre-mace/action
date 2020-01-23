@@ -35,6 +35,11 @@ let theme = createMuiTheme({
         color: "black"
       }
     },
+    MuiIconButton: {
+      colorSecondary: {
+        color: "#e1e1e1"
+      },
+    },
     MuiButton: {
       textSecondary: {
         color: "black"

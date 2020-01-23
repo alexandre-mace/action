@@ -29,14 +29,47 @@ button:focus {
 .color-primary {
     color: $primary-color;
 }
+.loader-container {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    z-index: 10000;
+}
+.logo-container {
+    position: absolute;
+    top: 8px;
+    z-index: 10000;
+    left: 15px;
+    span {
+        font-size: 30px;
+        color: $primary-color;
+        z-index: 10000;
+    }
+}
+.py-30 {
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+.search-container {
+    position: absolute;
+    border-radius: 10px;
+    z-index: 10000;
+    background-color: white;
+    top: 60px;
+    left: 15px;
+    width: calc(100% - 30px);
+}
 .ap-input {
     border: none;
-    border-bottom: 1px solid
-    white;
+    border-bottom: 1px solid white;
+    border-radius: 10px;
+    padding: 25px;
     background:
         transparent;
-    color:
-        white;
+    color: black;
+    -webkit-box-shadow: 0px 10px 15px 0px rgba(117,117,117,1);
+    -moz-box-shadow: 0px 10px 15px 0px rgba(117,117,117,1);
+    box-shadow: 0px 10px 15px 0px rgba(117,117,117,1);
 }
 .ap-name {
     color: $secondary-color;
@@ -53,9 +86,37 @@ button:focus {
     }
 }
 .leaflet-container {
-    height: 400px;
+    height: 60vh;
     max-width: 100%;
+}
+.events-container {
+    height: 40vh;
+    & > div {
+        height: 100%;
+    }
+    .react-swipeable-view-container {
+        height: 100%;
+    }
+}
+.leaflet-control-attribution {
+    display: none;
 }
 .leaflet-pane {
     width: 100%;
+}
+.bounce {
+    position: absolute;
+    animation: bounce 0.35s ease 0s 12 alternate;
+}
+.bounce-infinite {
+    position: absolute;
+    animation: bounce 0.35s ease infinite alternate;
+}
+@keyframes bounce {
+    from {
+        top: 0;
+    }
+    to {
+        top: -15px;
+    }
 }

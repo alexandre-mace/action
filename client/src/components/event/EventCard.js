@@ -12,6 +12,8 @@ import Chip from '@material-ui/core/Chip';
 import {connect} from "react-redux";
 import {Typography} from "@material-ui/core";
 import Button from '@material-ui/core/Button';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -68,24 +70,32 @@ function EventCard(props) {
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. At ducimus, eaque fuga illum iste iure libero magnam magni nulla numquam officiis, perspiciatis placeat quas quisquam rem sed sequi, voluptatem voluptatum!
             </div>
             <div className={"d-flex justify-content-between w-100"}>
-                <div>16/02 19h</div>
-                <div>{props.distance ? props.distance : ''}</div>
+                <div></div>
             </div>
           </div>
         </CardContent>
       </Link>
 
       <CardActions className={'mt-auto d-flex justify-content-between'} disableSpacing>
-        <Button color="secondary" onClick={() => props.handleEventSelected(props.event)}>
-          MAP
-        </Button>
+        {/*<Button color="secondary" onClick={() => props.handleEventSelected(props.event)}>*/}
+        {/*  MAP*/}
+        {/*</Button>*/}
+        <div className="d-flex justify-content-between w-100">
+          <div className="d-flex flex-column">
+            <div>16/02</div>
+            <div>19h</div>
+          </div>
+          <div>
+            {props.distance ? props.distance : ''}
+          </div>
+        </div>
         <div className="d-flex">
-          <Button color="secondary">
-            Intéressé 0
-          </Button>
-          <Button color="primary">
-            Je participe 0
-          </Button>
+          <IconButton color="secondary" size="medium">
+            <BookmarkIcon fontSize="large"/>
+          </IconButton>
+            <IconButton color="primary">
+            <EventAvailableIcon fontSize="large"/>
+            </IconButton>
         </div>
       </CardActions>
     </Card>

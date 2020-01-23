@@ -34,31 +34,30 @@ export default class LeafletMarker extends Component {
     }
   }
   render() {
-    // let renderedMarker = new L.Icon({
-    //   iconUrl: require('../../assets/img/marker-icon.png'),
-    //   iconRetinaUrl: require('../../assets/img/marker-icon.png'),
-    //   iconAnchor: [20,55],
-    //   popupAnchor: null,
-    //   shadowUrl: null,
-    //   shadowSize: null,
-    //   shadowAnchor: null,
-    //   iconSize: new L.Point(40, 55),
-    //   className: ''
-    // });
-    // if (this.state.bounce === true) {
-    //   renderedMarker = new L.Icon({
-    //     iconUrl: require('../../assets/img/marker-icon.png'),
-    //     iconRetinaUrl: require('../../assets/img/marker-icon.png'),
-    //     iconAnchor: [20, 55],
-    //     popupAnchor: null,
-    //     shadowUrl: null,
-    //     shadowSize: null,
-    //     shadowAnchor: null,
-    //     iconSize: new L.Point(40, 55),
-    //     className: 'bounce'
-    //   });
-    // }
-    // renderedMarker.options.className += ' marker-' + this.props.marker[0];
+    let renderedMarker = new L.Icon({
+      iconUrl: require('../../assets/img/marker-icon.png'),
+      iconRetinaUrl: require('../../assets/img/marker-icon.png'),
+      iconAnchor: [20,55],
+      popupAnchor: null,
+      shadowUrl: null,
+      shadowSize: null,
+      shadowAnchor: null,
+      iconSize: new L.Point(25, 41),
+      className: ''
+    });
+    if (this.state.bounce === true) {
+      renderedMarker = new L.Icon({
+        iconUrl: require('../../assets/img/marker-icon.png'),
+        iconRetinaUrl: require('../../assets/img/marker-icon.png'),
+        iconAnchor: [20, 55],
+        popupAnchor: null,
+        shadowUrl: null,
+        shadowSize: null,
+        shadowAnchor: null,
+        iconSize: new L.Point(25, 41),
+        className: 'bounce'
+      });
+    }
     return (<Marker onClick={this.handleClick} position={[this.props.event.latitude, this.props.event.longitude]}>
       </Marker>
     )

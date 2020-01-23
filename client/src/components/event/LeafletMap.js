@@ -1,29 +1,39 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import L from 'leaflet';
+import {Map, Popup, TileLayer, ZoomControl} from 'react-leaflet'
 import LeafletMarker from "./LeafletMarker";
+import LeafletAnimatedMarker from "./LeafletAnimatedMarker";
 
 // defaults
-let position = [ 44.8337080, -0.5821208];
-let zoom = 2;
+let zoom = 10;
 
 const LeafletMap = (props) => {
   window.dispatchEvent(new Event('resize'));
 
-  if (props.center) {
-    position = props.center;
-    zoom = 13;
+  if (props.eventSelected) {
+    zoom = 12;
   }
 
   return (
-    <Map center={position} zoom={zoom}>
+    <Map center={props.center} zoom={zoom} zoomControl={false}>
       <TileLayer
         url='http://{s}.tile.openstreetmap.fr/openriverboatmap/{z}/{x}/{y}.png'
         attribution='map data © [[http://osm.org/copyright|OpenStreetMap contributors]] under ODbL  - tiles OpenRiverboatMap'
       />
-      {props.events.map((event, index) => (
-        <LeafletMarker key={index} event={event} ></LeafletMarker>
-      ))}
+      <ZoomControl position="bottomright"/>
+      {props.events.map((event, index) => {
+        if (props.eventSelected && props.eventSelected.name === event.name) {
+          return (
+            <LeafletAnimatedMarker key={index} position={props.center}/>
+          )
+        } else {
+          return (
+            <LeafletMarker key={index} event={event}/>
+          )
+        }
+      }
+      )}
     </Map>
   )
 }
