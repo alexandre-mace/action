@@ -22,7 +22,9 @@ import userRoutes from './routes/user';
 import './app.scss';
 import HomePage from "./pages/HomePage";
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({
+  basename: process.env.PUBLIC_URL
+});
 const store = createStore(
   combineReducers({
     router: connectRouter(history),
