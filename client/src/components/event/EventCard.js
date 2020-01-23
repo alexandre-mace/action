@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: red[500],
   },
   title: {
-    fontSize: '1.2rem'
+    fontSize: '1.2rem',
+    fontWeight: '600'
   },
   root: {
     paddingTop: '0'
@@ -80,10 +81,10 @@ function EventCard(props) {
         {/*<Button color="secondary" onClick={() => props.handleEventSelected(props.event)}>*/}
         {/*  MAP*/}
         {/*</Button>*/}
-        <div className="d-flex justify-content-between w-100">
+        <div className="d-flex justify-content-between w-100 p-1">
           <div className="d-flex flex-column">
-            <div>16/02</div>
-            <div>19h</div>
+            <div className="font-weight-bold">16/02</div>
+            <div  className="font-weight-light">19h</div>
           </div>
           <div>
             {props.distance ? props.distance : ''}

@@ -11,7 +11,7 @@ import Events from "./Events";
 
 const defaultsEvents = [
   {
-    name: "eventA",
+    name: "Ramassage de déchet sur le bassin à flot",
     latitude: 44.868271,
     longitude: -0.552860
   },
