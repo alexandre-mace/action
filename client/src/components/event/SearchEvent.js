@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
 import AlgoliaPlaces from 'algolia-places-react';
-import getDistance from 'geolib/es/getDistance';
 import orderByDistance from 'geolib/es/orderByDistance';
-import displayMeters from "../../utils/displayMeters";
-import EventCard from "./EventCard";
 import {Loader} from "../Loader";
 import Map from "./LeafletMap";
-import SwipeableViews from 'react-swipeable-views';
 import Events from "./Events";
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 const defaultsEvents = [
   {
@@ -81,6 +78,9 @@ const SearchEvent = () => {
       }
       <div className="logo-container">
         <span>Action</span>
+      </div>
+      <div className="account-link-container">
+        <AccountBoxIcon style={{fontSize: "45px"}} color="primary" className="account-link-icon"/>
       </div>
       <div className="search-container container">
         <div className="row">

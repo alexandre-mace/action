@@ -37,14 +37,14 @@ button:focus {
 }
 .logo-container {
     position: absolute;
-    top: 8px;
+    top: 1rem;
     z-index: 10000;
     left: 15px;
-    span {
-        font-size: 30px;
-        color: $primary-color;
-        z-index: 10000;
-    }
+}
+span.logo {
+    font-size: 30px;
+    color: $primary-color;
+    z-index: 10000;
 }
 .py-30 {
     padding-bottom: 30px;
@@ -54,7 +54,7 @@ button:focus {
     position: absolute;
     border-radius: 10px;
     z-index: 10000;
-    top: 60px;
+    top: 70px;
     left: 15px;
     width: calc(100% - 30px);
 }
@@ -92,6 +92,16 @@ button:focus {
     height: 66vh;
     max-width: 100%;
 }
+.account-link-container {
+    position: absolute;
+    top: 1rem;
+    right: 15px;
+    z-index: 10000;
+}
+.account-link-icon {
+    color: $secondary-color !important;
+}
+
 .events-container {
     height: 34vh;
     & > div {

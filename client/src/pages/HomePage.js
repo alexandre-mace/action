@@ -1,13 +1,128 @@
-import React from 'react';
-import SearchEvent from "../components/event/SearchEvent";
+import React, {useState} from 'react';
+import AlgoliaPlaces from 'algolia-places-react';
+import orderByDistance from 'geolib/es/orderByDistance';
+import {Loader} from "../components/Loader";
+import Map from "./../components/event/LeafletMap";
+import Events from "./../components/event/Events";
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Layout from "../components/Layout";
-import Map from "../components/event/LeafletMap";
+import {Link} from "react-router-dom";
 
-const HomePage = () => (
-  <Layout>
-      <SearchEvent/>
-      <div className={"container"}>
+const defaultsEvents = [
+  {
+    name: "Ramassage de déchet sur le bassin à flot",
+    latitude: 44.868271,
+    longitude: -0.552860
+  },
+  {
+    name: "eventB",
+    latitude: 80,
+    longitude: 34
+  },
+  {
+    name: "eventC",
+    latitude: 37,
+    longitude: 7
+  },
+  {
+    name: "eventD",
+    latitude: 22,
+    longitude: 88
+  },
+];
+
+const HomePage = (props) => {
+  const [userPosition, setUserPosition] = useState(false);
+  const [eventSelected, setEventSelected] = useState(false);
+  const [mapCenter, setMapCenter] = useState([ 44.8337080, -0.5821208]);
+  const [events, setEvents] = useState(defaultsEvents);
+  const [calculatingNearestEvents, setCalculatingNearestEvents] = useState(false);
+
+  const handleUserPositionSelected = ({lat, lng}) => {
+    setCalculatingNearestEvents(true);
+    setEvents(orderByDistance({lat, lng}, events));
+    setUserPosition({
+      latitude: lat,
+      longitude: lng
+    });
+    setMapCenter([
+      lat,
+      lng
+    ]);
+    setTimeout(() => {setCalculatingNearestEvents(false)}, 800);
+  };
+
+  const handleEventSelected = swipeIndex => {
+    setEventSelected(events[swipeIndex]);
+    setMapCenter([
+      events[swipeIndex].latitude,
+      events[swipeIndex].longitude
+    ])
+  };
+
+  return (
+    <Layout>
+      {!calculatingNearestEvents &&
+      <Map
+        center={mapCenter}
+        eventSelected={eventSelected}
+        events={events}
+      />
+      }
+      {calculatingNearestEvents &&
+      <div className="loader-container container">
+        <div className="row">
+          <div className="col text-center">
+            <Loader/>
+          </div>
+        </div>
       </div>
-  </Layout>
-);
-export default HomePage
+      }
+      <div className="logo-container">
+        <span className="logo">Action</span>
+      </div>
+      <div className="account-link-container">
+        <Link to={"/compte"}>
+          <AccountBoxIcon style={{fontSize: "45px"}} className="account-link-icon"/>
+        </Link>
+      </div>
+      <div className="search-container container">
+        <div className="row">
+          <div className="col-12 p-0 col-md-6 offset-md-3">
+            <AlgoliaPlaces
+              placeholder="Je recherche des évenements à "
+              options={{
+                appId: 'plXZW2RVWB96',
+                apiKey: '8432eadb718c9d4714a8beb933d71483',
+                language: 'fr',
+                countries: ['fr'],
+                type: 'address',
+                useDeviceLocation: true
+              }}
+
+              onChange={({query, rawAnswer, suggestion, suggestionIndex}) => {
+                console.log("change")
+                handleUserPositionSelected(suggestion.latlng)
+              }}
+              onSuggestions={({rawAnswer, query, suggestions}) => {}}
+              onCursorChanged={({rawAnswer, query, suggestion, suggestonIndex}) => {}}
+              onClear={() => {}}
+              onLimit={({message}) => {}}
+              onError={({message}) => {}}
+            />
+          </div>
+        </div>
+      </div>
+
+
+      {!calculatingNearestEvents &&
+      <Events
+        events={events}
+        handleEventSelected={handleEventSelected}
+        userPosition={userPosition}
+      />
+      }
+    </Layout>
+  )
+};
+export default HomePage;

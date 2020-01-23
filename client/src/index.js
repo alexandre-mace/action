@@ -21,6 +21,7 @@ import user from './reducers/user/';
 import userRoutes from './routes/user';
 import './app.scss';
 import HomePage from "./pages/HomePage";
+import AccountPage from "./pages/AccountPage";
 
 const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL
@@ -40,9 +41,10 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={HomePage}/>
         { userRoutes }
         { eventRoutes }
+        <Route path="/compte" component={AccountPage}/>
+        <Route path="/" component={HomePage}/>
         <Route render={() => <h1>Not Found</h1>} />
       </Switch>
     </ConnectedRouter>
