@@ -38,7 +38,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={HomePage} strict={true} exact={true}/>
+        <Route path="/" component={HomePage}/>
         { userRoutes }
         { eventRoutes }
         <Route render={() => <h1>Not Found</h1>} />
