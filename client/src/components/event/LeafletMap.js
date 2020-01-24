@@ -18,7 +18,7 @@ const LeafletMap = (props) => {
   return (
     <Map center={props.center} zoom={zoom} zoomControl={false}>
       <TileLayer
-        url='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+        url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
         attribution='map data © [[http://osm.org/copyright|OpenStreetMap contributors]] under ODbL  - tiles OpenRiverboatMap'
       />
       <ZoomControl position="bottomright"/>
