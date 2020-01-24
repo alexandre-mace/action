@@ -16,13 +16,13 @@ const defaultsEvents = [
   },
   {
     name: "eventB",
-    latitude: 80,
-    longitude: 34
+    latitude: 48.858372,
+    longitude: 2.294481
   },
   {
     name: "eventC",
-    latitude: 37,
-    longitude: 7
+    latitude: 51.507351,
+    longitude: -0.127758
   },
   {
     name: "eventD",
@@ -118,6 +118,7 @@ const HomePage = (props) => {
       {!calculatingNearestEvents &&
       <Events
         events={events}
+        eventSelected={eventSelected}
         handleEventSelected={handleEventSelected}
         userPosition={userPosition}
       />

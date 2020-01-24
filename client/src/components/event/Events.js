@@ -20,7 +20,10 @@ const Events = (props) => (
     <div className="d-block d-md-none">
       <div className="events-container">
 
-        <SwipeableViews onChangeIndex={props.handleEventSelected} style={styles.root} slideStyle={styles.slideContainer}>
+        <SwipeableViews
+          onChangeIndex={props.handleEventSelected}
+          style={props.eventSelected.name !== props.events[props.events.length - 1].name ? styles.root : {padding:"0 0 0 45px"}}
+          slideStyle={styles.slideContainer}>
           {props.events.map((event, index) => (
             <div className={"h-100 py-30 pr-3"} key={index} style={Object.assign({}, styles.slide)}>
               <EventCard
