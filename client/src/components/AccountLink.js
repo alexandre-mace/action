@@ -1,6 +1,5 @@
 import {Link} from "react-router-dom";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import Layout from "./Layout";
 import React from "react";
 
 const AccountLink = () => (

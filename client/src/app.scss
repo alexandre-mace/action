@@ -71,6 +71,9 @@ span.logo {
     -moz-box-shadow: 0px 10px 15px 0px rgba(204,204,204,1);
     box-shadow: 0px 10px 15px 0px rgba(204,204,204,1);
 }
+.search-box-margin {
+    margin-top: 14rem;
+}
 .ap-name {
     color: $secondary-color;
 }
@@ -100,7 +103,15 @@ span.logo {
     z-index: 10000;
 }
 .account-link-icon {
-    color: $secondary-color !important;
+    color: $primary-color !important;
+}
+.viewmode-switcher-container {
+    position: absolute;
+    background-color: transparent;
+    left: 50%;
+    top: 130px;
+    transform: translateX(-50%);
+    z-index: 10000;
 }
 
 .events-container {

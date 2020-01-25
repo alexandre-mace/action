@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Layout from "../components/Layout";
 import {Link} from "react-router-dom";
 import MapIcon from '@material-ui/icons/Map';
+import HomeIcon from '@material-ui/icons/Home';
 
 const AccountPage = props => {
   return (
@@ -13,7 +14,7 @@ const AccountPage = props => {
           </div>
           <div className="col text-right">
             <Link to={"/"}>
-              <MapIcon style={{fontSize: "45px"}} color="primary"/>
+              <HomeIcon style={{fontSize: "45px"}} color="primary"/>
             </Link>
           </div>
         </div>
