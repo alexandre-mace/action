@@ -1,8 +1,7 @@
 import AlgoliaPlaces from "algolia-places-react";
-import Layout from "./Layout";
 import React from "react";
 
-const SearchBar = () => (
+const SearchBar = (props) => (
   <div className="search-container container">
     <div className="row">
       <div className="col-12 p-0 col-md-6 offset-md-3">

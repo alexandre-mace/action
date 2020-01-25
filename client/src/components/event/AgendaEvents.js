@@ -11,7 +11,7 @@ const AgendaEvents = (props) => (
             <React.Fragment key={index}>
             {(!props.events[index - 1] || props.events[index - 1] && !isSameDay(props.events[index - 1].date, event.date)) &&
               <div className={"col-12 text-center mt-3"}>
-                <span>{event.date}</span>
+                <span>{(new Date(event.date)).toLocaleDateString('fr-FR', {weekday: "long", month: "long", day: "numeric"}).toUpperCase()}</span>
               </div>
             }
             <div className={"col-12 col-md-4 mt-3"} key={index}>
