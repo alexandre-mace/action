@@ -14,7 +14,7 @@ const styles = {
   },
 };
 
-const Events = (props) => (
+const MapEvents = (props) => (
   <>
     {/* mobile */}
     <div className="d-block d-md-none">
@@ -64,4 +64,4 @@ const Events = (props) => (
     </div>
   </>
 );
-export default Events
+export default MapEvents

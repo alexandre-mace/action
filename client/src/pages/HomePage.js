@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import AlgoliaPlaces from 'algolia-places-react';
 import orderByDistance from 'geolib/es/orderByDistance';
-import {Loader} from "../components/Loader";
 import Map from "./../components/event/LeafletMap";
-import Events from "./../components/event/Events";
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import Events from "../components/event/MapEvents";
 import Layout from "../components/Layout";
-import {Link} from "react-router-dom";
+import Logo from "../components/Logo";
+import AccountLink from "../components/AccountLink";
+import SearchBar from "../components/SearchBar";
+import FullScreenLoader from "../components/FullScreenLoader";
 
 const defaultsEvents = [
   {
@@ -37,6 +37,7 @@ const HomePage = (props) => {
   const [mapCenter, setMapCenter] = useState([ 44.8337080, -0.5821208]);
   const [events, setEvents] = useState(defaultsEvents);
   const [calculatingNearestEvents, setCalculatingNearestEvents] = useState(false);
+  const [viewMode, setViewMode] = useState('agenda');
 
   const handleUserPositionSelected = ({lat, lng}) => {
     setCalculatingNearestEvents(true);
@@ -62,66 +63,34 @@ const HomePage = (props) => {
 
   return (
     <Layout>
-      {!calculatingNearestEvents &&
-      <Map
-        center={mapCenter}
-        eventSelected={eventSelected}
-        events={events}
-      />
-      }
       {calculatingNearestEvents &&
-      <div className="loader-container container">
-        <div className="row">
-          <div className="col text-center">
-            <Loader/>
-          </div>
-        </div>
-      </div>
+        <FullScreenLoader/>
       }
-      <div className="logo-container">
-        <span className="logo">Action</span>
-      </div>
-      <div className="account-link-container">
-        <Link to={"/compte"}>
-          <AccountBoxIcon style={{fontSize: "45px"}} className="account-link-icon"/>
-        </Link>
-      </div>
-      <div className="search-container container">
-        <div className="row">
-          <div className="col-12 p-0 col-md-6 offset-md-3">
-            <AlgoliaPlaces
-              placeholder="Je recherche des évenements à "
-              options={{
-                appId: 'plXZW2RVWB96',
-                apiKey: '8432eadb718c9d4714a8beb933d71483',
-                language: 'fr',
-                countries: ['fr'],
-                type: 'address',
-                useDeviceLocation: true
-              }}
-
-              onChange={({query, rawAnswer, suggestion, suggestionIndex}) => {
-                console.log("change")
-                handleUserPositionSelected(suggestion.latlng)
-              }}
-              onSuggestions={({rawAnswer, query, suggestions}) => {}}
-              onCursorChanged={({rawAnswer, query, suggestion, suggestonIndex}) => {}}
-              onClear={() => {}}
-              onLimit={({message}) => {}}
-              onError={({message}) => {}}
-            />
-          </div>
-        </div>
-      </div>
-
+      <Logo/>
+      <AccountLink/>
+      <SearchBar
+        handleUserPositionSelected={handleUserPositionSelected}
+      />
 
       {!calculatingNearestEvents &&
-      <Events
-        events={events}
-        eventSelected={eventSelected}
-        handleEventSelected={handleEventSelected}
-        userPosition={userPosition}
-      />
+      <>
+        {viewMode === 'map' &&
+        <>
+          <Map
+            center={mapCenter}
+            eventSelected={eventSelected}
+            events={events}
+          />
+          <MapEvents
+            events={events}
+            eventSelected={eventSelected}
+            handleEventSelected={handleEventSelected}
+            userPosition={userPosition}
+          />
+        </>
+        }
+
+      </>
       }
     </Layout>
   )
