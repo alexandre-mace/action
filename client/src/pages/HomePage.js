@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import orderByDistance from 'geolib/es/orderByDistance';
+import isPointWithinRadius from "geolib/es/isPointWithinRadius";
 import Map from "./../components/event/LeafletMap";
 import MapEvents from "../components/event/MapEvents";
 import Layout from "../components/Layout";
@@ -8,49 +9,34 @@ import AccountLink from "../components/AccountLink";
 import SearchBar from "../components/SearchBar";
 import FullScreenLoader from "../components/FullScreenLoader";
 import AgendaEvents from "../components/event/AgendaEvents";
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import IconButton from "@material-ui/core/IconButton";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
-import MapIcon from '@material-ui/icons/Map';
-
-const defaultsEvents = [
-  {
-    name: "Ramassage de déchet sur le bassin à flot",
-    latitude: 44.868271,
-    longitude: -0.552860,
-    date: '02/07/2020'
-  },
-  {
-    name: "eventB",
-    latitude: 48.858372,
-    longitude: 2.294481,
-    date: '02/07/2020'
-  },
-  {
-    name: "eventC",
-    latitude: 51.507351,
-    longitude: -0.127758,
-    date: '03/14/2020'
-  },
-  {
-    name: "eventD",
-    latitude: 22,
-    longitude: 88,
-    date: '03/28/2020'
-  },
-];
+import defaultsEvents from "../config/defaultEvents";
 
 const HomePage = (props) => {
-  const [userPosition, setUserPosition] = useState(false);
+  const [userPosition, setUserPosition] = useState({ latitude: 44.8337080, longitude: -0.5821208 });
+  const [radius, setRadius] = useState(5000);
   const [eventSelected, setEventSelected] = useState(false);
   const [mapCenter, setMapCenter] = useState([ 44.8337080, -0.5821208]);
-  const [events, setEvents] = useState(defaultsEvents);
+  const [events, setEvents] = useState(defaultsEvents.filter((event) => {
+    return isPointWithinRadius(
+      {latitude: event.latitude, longitude: event.longitude},
+      {latitude: userPosition.latitude, longitude: userPosition.longitude},
+      radius
+    )
+  }));
   const [calculatingNearestEvents, setCalculatingNearestEvents] = useState(false);
-  const [viewMode, setViewMode] = useState('agenda');
 
   const handleUserPositionSelected = ({lat, lng}) => {
     setCalculatingNearestEvents(true);
-    setEvents(orderByDistance({lat, lng}, events));
+
+    const eventsInRadius = defaultsEvents.filter((event) => {
+      return isPointWithinRadius(
+         {latitude: event.latitude, longitude: event.longitude},
+        {latitude: lat, longitude: lng},
+        radius
+      )
+    });
+
+    setEvents(orderByDistance({latitude: lat, longitude: lng}, eventsInRadius));
     setUserPosition({
       latitude: lat,
       longitude: lng
@@ -59,6 +45,22 @@ const HomePage = (props) => {
       lat,
       lng
     ]);
+    setTimeout(() => {setCalculatingNearestEvents(false)}, 800);
+  };
+
+  const handleChangeRadius = (radiusElement) => {
+    setCalculatingNearestEvents(true);
+
+    setRadius(radiusElement.target.value);
+    const eventsInRadius = defaultsEvents.filter((event) => {
+      return isPointWithinRadius(
+        {latitude: event.latitude, longitude: event.longitude},
+        {latitude: userPosition.latitude, longitude: userPosition.longitude},
+        radiusElement.target.value
+      )
+    });
+
+    setEvents(orderByDistance({latitude: userPosition.latitude, longitude: userPosition.longitude}, eventsInRadius));
     setTimeout(() => {setCalculatingNearestEvents(false)}, 800);
   };
 
@@ -75,52 +77,36 @@ const HomePage = (props) => {
       {calculatingNearestEvents &&
       <FullScreenLoader/>
       }
-      <div className="viewmode-switcher-container">
-        {viewMode === 'agenda' &&
-        <IconButton color="primary" onClick={() => setViewMode('map')}>
-          <MapIcon fontSize="large"/>
-        </IconButton>
-        }
-        {viewMode === 'map' &&
-        <IconButton color="primary"  onClick={() => setViewMode('agenda')}>
-          <DateRangeIcon fontSize="large"/>
-        </IconButton>
-        }
-      </div>
       <Logo/>
       <AccountLink/>
       <SearchBar
         handleUserPositionSelected={handleUserPositionSelected}
+        radius={radius}
+        handleChangeRadius={handleChangeRadius}
       />
 
       {!calculatingNearestEvents &&
-      <>
-        {viewMode === 'map' &&
-        <>
-          <Map
-            center={mapCenter}
-            eventSelected={eventSelected}
-            events={events}
-          />
-          <MapEvents
-            events={events}
-            eventSelected={eventSelected}
-            handleEventSelected={handleEventSelected}
-            userPosition={userPosition}
-          />
-        </>
-        }
-        {viewMode === 'agenda' &&
-        <>
-          <AgendaEvents
-            events={events}
-            eventSelected={eventSelected}
-            handleEventSelected={handleEventSelected}
-            userPosition={userPosition}
-          />
-        </>
-        }
-      </>
+      <AgendaEvents
+        events={events}
+        eventSelected={eventSelected}
+        handleEventSelected={handleEventSelected}
+        userPosition={userPosition}
+      />
+        // {viewMode === 'map' &&
+        // <>
+        //   <Map
+        //     center={mapCenter}
+        //     eventSelected={eventSelected}
+        //     events={events}
+        //   />
+        //   <MapEvents
+        //     events={events}
+        //     eventSelected={eventSelected}
+        //     handleEventSelected={handleEventSelected}
+        //     userPosition={userPosition}
+        //   />
+        // </>
+        // }
       }
     </Layout>
   )

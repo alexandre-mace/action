@@ -1,5 +1,4 @@
 export default function displayMeters(meters) {
-  console.log(meters)
   if (meters.toString().length < 4) {
     return meters + " m";
   }

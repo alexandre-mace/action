@@ -7,7 +7,12 @@ import isSameDay from "../../utils/isSameDay";
 const AgendaEvents = (props) => (
       <div className="container search-box-margin">
         <div className="row">
-          {props.events.map((event, index) => (
+          {props.events.length === 0 &&
+            <div className="col text-center">
+              <p>Il n'y a pas encore d'évenements organisés proche de votre localisation</p>
+            </div>
+          }
+          {props.events && props.events.map((event, index) => (
             <React.Fragment key={index}>
             {(!props.events[index - 1] || props.events[index - 1] && !isSameDay(props.events[index - 1].date, event.date)) &&
               <div className={"col-12 text-center mt-3"}>
