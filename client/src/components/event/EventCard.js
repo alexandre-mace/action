@@ -71,18 +71,12 @@ function EventCard(props) {
             <div className={"d-none d-md-flex"}>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. At ducimus, eaque fuga illum iste iure libero magnam magni nulla numquam officiis, perspiciatis placeat quas quisquam rem sed sequi, voluptatem voluptatum!
             </div>
-            <div className={"d-flex justify-content-between w-100"}>
-                <div></div>
-            </div>
           </div>
         </CardContent>
       </Link>
 
       <CardActions className={'mt-auto d-flex justify-content-between pt-0'} disableSpacing>
-        {/*<Button color="secondary" onClick={() => props.handleEventSelected(props.event)}>*/}
-        {/*  MAP*/}
-        {/*</Button>*/}
-        <div className="d-flex justify-content-between w-100 p-1">
+        <div className="d-flex justify-content-between flex-grow-1 p-1">
           <div className="d-flex flex-column">
             <div className="font-weight-bold">16/02</div>
             <div  className="font-weight-light">19h</div>

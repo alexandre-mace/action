@@ -166,3 +166,27 @@ span.logo {
         top: -15px;
     }
 }
+.full-screen-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background-color: $secondary-color;
+    z-index: 10000;
+    height: 100vh;
+    min-height: 100vh;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+svg {
+    max-height: 400px;
+    max-width: 100%;
+}
+@media screen and (max-width: 640px) {
+    svg {
+        max-height: 220px;
+    }
+}
+.min-full-screen {
+    min-height: 100vh;
+}

@@ -84,7 +84,7 @@ const HomePage = (props) => {
   };
 
   return (
-    <Layout>
+    <Layout {...props}>
       {calculatingNearestEvents &&
       <FullScreenLoader/>
       }

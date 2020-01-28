@@ -115,14 +115,14 @@ class Layout extends React.Component {
     //       this.props.setAuthenticated(true);
     //     })
     // }
+
+    if (!localStorage.getItem('onboarding')) {
+      localStorage.setItem('onboarding', 'true')
+      this.props.history.push('/bienvenue')
+    }
   }
 
   render() {
-    // if (!localStorage.getItem('bienvenue')) {
-    //   localStorage.setItem('bienvenue', 'true')
-    //   this.props.history.push('/bienvenue')
-    // }
-    //
     // const user = this.props.authenticated ? (this.props.updated ? this.props.updated : this.props.retrieved) : false;
     //
     // let notifications = 0;
