@@ -7,6 +7,11 @@ import isSameDay from "../../utils/isSameDay";
 const AgendaEvents = (props) => (
       <div className="container search-box-margin">
         <div className="row">
+          <div className="col text-center">
+            <p>Recherche de d'évenement à proximité de {props.userPosition.addressName}</p>
+          </div>
+        </div>
+        <div className="row">
           {props.events.length === 0 &&
             <div className="col text-center">
               <p>Il n'y a pas encore d'évenements organisés proche de votre localisation</p>
@@ -23,6 +28,7 @@ const AgendaEvents = (props) => (
               <EventCard
                 handleEventSelected={props.handleEventSelected}
                 event={event}
+                handleMapView={props.handleMapView}
                 distance={
                   props.userPosition
                     ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))

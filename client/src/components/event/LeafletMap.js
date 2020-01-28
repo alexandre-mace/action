@@ -4,6 +4,7 @@ import L from 'leaflet';
 import {Map, Popup, TileLayer, ZoomControl} from 'react-leaflet'
 import LeafletMarker from "./LeafletMarker";
 import LeafletAnimatedMarker from "./LeafletAnimatedMarker";
+import CloseIcon from '@material-ui/icons/Close';
 
 // defaults
 let zoom = 10;
@@ -16,6 +17,7 @@ const LeafletMap = (props) => {
   }
 
   return (
+    <>
     <Map center={props.center} zoom={zoom} zoomControl={false}>
       <TileLayer
         url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
@@ -35,6 +37,10 @@ const LeafletMap = (props) => {
       }
       )}
     </Map>
+      <div className={"map-close"}>
+        <CloseIcon fontSize={"large"} onClick={() => props.handleCloseMapView()}/>
+      </div>
+    </>
   )
 }
 

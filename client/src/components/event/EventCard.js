@@ -14,6 +14,7 @@ import {Typography} from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import event from "../../routes/event";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -65,7 +66,7 @@ function EventCard(props) {
           title={`${props.event.name.substring(0, 60)} ${props.event.name.length > 58 ? '...' : ''}`}
           subheader={''}
         />
-        <CardContent classes={{root: classes.root}} className={"pb-1 pb-md-3"}>
+        <CardContent classes={{root: classes.root}} className={"pb-0 pb-md-3"}>
           <div className="d-flex flex-column w-100">
             <div className={"d-none d-md-flex"}>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. At ducimus, eaque fuga illum iste iure libero magnam magni nulla numquam officiis, perspiciatis placeat quas quisquam rem sed sequi, voluptatem voluptatum!
@@ -77,7 +78,7 @@ function EventCard(props) {
         </CardContent>
       </Link>
 
-      <CardActions className={'mt-auto d-flex justify-content-between'} disableSpacing>
+      <CardActions className={'mt-auto d-flex justify-content-between pt-0'} disableSpacing>
         {/*<Button color="secondary" onClick={() => props.handleEventSelected(props.event)}>*/}
         {/*  MAP*/}
         {/*</Button>*/}
@@ -85,6 +86,7 @@ function EventCard(props) {
           <div className="d-flex flex-column">
             <div className="font-weight-bold">16/02</div>
             <div  className="font-weight-light">19h</div>
+            <div onClick={() => props.handleMapView(props.event)}>voir sur la carte</div>
           </div>
           <div>
             {props.distance ? props.distance : ''}

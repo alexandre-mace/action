@@ -38,7 +38,6 @@ button:focus {
 .logo-container {
     position: absolute;
     top: 1rem;
-    z-index: 10000;
     left: 15px;
 }
 span.logo {
@@ -53,7 +52,6 @@ span.logo {
 .search-container {
     position: absolute;
     border-radius: 10px;
-    z-index: 10000;
     top: 70px;
     left: 15px;
     width: calc(100% - 30px);
@@ -72,7 +70,7 @@ span.logo {
     color: black;
 }
 .search-box-margin {
-    margin-top: 14rem;
+    margin-top: 12rem;
 }
 .ap-name {
     color: $secondary-color;
@@ -106,14 +104,24 @@ span.logo {
     }
 }
 .leaflet-container {
-    height: 66vh;
-    max-width: 100%;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+.map-close {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 200;
+    color: black;
 }
 .account-link-container {
     position: absolute;
     top: 1rem;
     right: 15px;
-    z-index: 10000;
 }
 .account-link-icon {
     color: $primary-color !important;

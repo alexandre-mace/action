@@ -112,7 +112,8 @@ const SearchBar = (props) => {
 
             onChange={({query, rawAnswer, suggestion, suggestionIndex}) => {
               console.log("change")
-              props.handleUserPositionSelected(suggestion.latlng)
+              console.log(suggestion)
+              props.handleUserPositionSelected(suggestion.latlng, suggestion.name + ', ' + suggestion.postcode + ' ' + suggestion.city)
             }}
             onSuggestions={({rawAnswer, query, suggestions}) => {}}
             onCursorChanged={({rawAnswer, query, suggestion, suggestonIndex}) => {}}
