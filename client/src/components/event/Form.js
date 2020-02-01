@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { DateTimePicker } from "@material-ui/pickers";
 
 class Form extends Component {
   static propTypes = {
@@ -9,8 +12,6 @@ class Form extends Component {
   };
 
   renderField = data => {
-    data.input.className = 'form-control';
-
     const isInvalid = data.meta.touched && !!data.meta.error;
     if (isInvalid) {
       data.input.className += ' is-invalid';
@@ -20,23 +21,32 @@ class Form extends Component {
     if (this.props.error && data.meta.touched && !data.meta.error) {
       data.input.className += ' is-valid';
     }
+    console.log(data)
 
     return (
       <div className={`form-group`}>
-        <label
-          htmlFor={`event_${data.input.name}`}
-          className="form-control-label"
-        >
-          {data.input.name}
-        </label>
-        <input
+
+        {data && data.type === 'text' &&
+        <TextField
           {...data.input}
           type={data.type}
           step={data.step}
+          label={data.input.name}
           required={data.required}
           placeholder={data.placeholder}
           id={`event_${data.input.name}`}
+          fullWidth
         />
+        }
+        {data && data.type === 'dateTime' &&
+        <DateTimePicker
+          {...data.input}
+          value={data.input.value ? data.input.value : new Date()}
+          disablePast
+          label={data.input.name}
+          showTodayButton
+        />
+        }
         {isInvalid && <div className="invalid-feedback">{data.meta.error}</div>}
       </div>
     );
@@ -54,13 +64,6 @@ class Form extends Component {
         />
         <Field
           component={this.renderField}
-          name="date"
-          type="dateTime"
-          placeholder=""
-          required={true}
-        />
-        <Field
-          component={this.renderField}
           name="description"
           type="text"
           placeholder=""
@@ -68,17 +71,10 @@ class Form extends Component {
         />
         <Field
           component={this.renderField}
-          name="totalInterested"
-          type="number"
+          name="date"
+          type="dateTime"
           placeholder=""
-          normalize={v => parseFloat(v)}
-        />
-        <Field
-          component={this.renderField}
-          name="totalParticipant"
-          type="number"
-          placeholder=""
-          normalize={v => parseFloat(v)}
+          required={true}
         />
         <Field
           component={this.renderField}
@@ -87,10 +83,9 @@ class Form extends Component {
           placeholder=""
           required={true}
         />
-
-        <button type="submit" className="btn btn-success">
+        <Button color="primary" type="submit" variant="contained">
           Submit
-        </button>
+        </Button>
       </form>
     );
   }

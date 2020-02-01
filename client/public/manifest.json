@@ -1,6 +1,6 @@
 {
-  "short_name": "API Platform",
-  "name": "Client",
+  "short_name": "Action",
+  "name": "Action",
   "icons": [
     {
       "src": "favicon.ico",

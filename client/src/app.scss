@@ -36,9 +36,6 @@ button:focus {
     z-index: 10000;
 }
 .logo-container {
-    position: absolute;
-    top: 1rem;
-    left: 15px;
 }
 span.logo {
     font-size: 30px;
@@ -93,8 +90,10 @@ span.logo {
     border-top-left-radius: unset !important;
     border-bottom-left-radius: unset !important;
     transform: translateX(-8px) !important;
+    width: calc(100% + 8px) !important;
+    min-width: unset !important;
     z-index: 10;
-    .MuiSvgIcon-root {
+    svg {
         transform: translateX(2px);
     }
 }
@@ -189,4 +188,11 @@ svg {
 }
 .min-full-screen {
     min-height: 100vh;
+}
+.absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 30px);
 }

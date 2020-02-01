@@ -96,9 +96,9 @@ const SearchBar = (props) => {
   return (
     <ThemeProvider theme={theme}>
 
-    <div className="search-container container">
+    <div className="container mt-2">
       <div className="row">
-        <div className="col-10 p-0 col-md-6 offset-md-3">
+        <div className="col-10 pr-0 col-md-6 offset-md-3">
           <AlgoliaPlaces
             placeholder="Je recherche des évenements à "
             options={{
@@ -122,7 +122,7 @@ const SearchBar = (props) => {
             onError={({message}) => {}}
           />
         </div>
-        <div className="col-2 p-0">
+        <div className="col-2 pl-0">
             <Button aria-describedby={id} className={"h-100 search-settings-button"} variant="contained" color="primary" onClick={handleClick}>
               <TuneIcon/>
             </Button>

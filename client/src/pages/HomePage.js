@@ -88,7 +88,6 @@ const HomePage = (props) => {
       {calculatingNearestEvents &&
       <FullScreenLoader/>
       }
-      <Logo/>
       <AccountLink/>
       <SearchBar
         handleUserPositionSelected={handleUserPositionSelected}

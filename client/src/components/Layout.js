@@ -7,6 +7,10 @@ import {connect} from "react-redux";
 // import {authentication} from "../../services/authentication";
 // import { retrieve, reset } from '../../actions/user/show';
 import responsiveFontSizes from "@material-ui/core/styles/responsiveFontSizes";
+import Logo from "./Logo";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import frLocale from "date-fns/locale/fr";
 
 let theme = createMuiTheme({
   palette: {
@@ -134,10 +138,13 @@ class Layout extends React.Component {
     // }
 
     return(
-        <ThemeProvider theme={theme}>
-          <div className="my-md-5"></div>
+      <ThemeProvider theme={theme}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={frLocale}>
+          <div className="my-3 my-md-5"></div>
+          <Logo/>
           {this.props.children}
-        </ThemeProvider>
+        </MuiPickersUtilsProvider>
+      </ThemeProvider>
     );
   }
 }

@@ -28,8 +28,6 @@ class Create extends Component {
 
     return (
       <div>
-        <h1>New Event</h1>
-
         {this.props.loading && (
           <div className="alert alert-info" role="status">
             Loading...
@@ -43,9 +41,6 @@ class Create extends Component {
         )}
 
         <Form onSubmit={this.props.create} values={this.props.item} />
-        <Link to="." className="btn btn-primary">
-          Back to list
-        </Link>
       </div>
     );
   }

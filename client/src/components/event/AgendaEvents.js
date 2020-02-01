@@ -5,7 +5,7 @@ import getDistance from "geolib/es/getDistance";
 import isSameDay from "../../utils/isSameDay";
 
 const AgendaEvents = (props) => (
-      <div className="container search-box-margin">
+      <div className="container mt-5">
         <div className="row">
           <div className="col text-center">
             <p>Recherche de d'évenement à proximité de {props.userPosition.addressName}</p>

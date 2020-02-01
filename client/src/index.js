@@ -23,6 +23,9 @@ import './app.scss';
 import HomePage from "./pages/HomePage";
 import AccountPage from "./pages/AccountPage";
 import OnBoardingPage from "./pages/OnBoardingPage";
+import {PrivateRoute} from "./utils/PrivateRoute";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL
@@ -44,7 +47,9 @@ ReactDOM.render(
       <Switch>
         { userRoutes }
         { eventRoutes }
-        <Route path="/compte" component={AccountPage}/>
+        <Route path="/se-connecter" component={LoginPage} />
+        <Route path="/s'inscrire" component={RegisterPage} />
+        <PrivateRoute path="/compte" component={AccountPage}/>
         <Route path="/bienvenue" component={OnBoardingPage} />
         <Route path="/" component={HomePage}/>
         <Route render={() => <h1>Not Found</h1>} />
