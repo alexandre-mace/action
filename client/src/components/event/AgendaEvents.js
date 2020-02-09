@@ -3,19 +3,30 @@ import React from "react";
 import displayMeters from "../../utils/displayMeters";
 import getDistance from "geolib/es/getDistance";
 import isSameDay from "../../utils/isSameDay";
+import NoDataSvg from "../../utils/NoDataSvg";
 
 const AgendaEvents = (props) => (
       <div className="container mt-5">
         <div className="row">
           <div className="col text-center">
-            <p>Recherche de d'évenement à proximité de {props.userPosition.addressName}</p>
+            <p>
+              Recherche de d'évenement à proximité de <br/>
+              <span className="font-weight-bold">
+                {props.userPosition.addressName}
+              </span>
+            </p>
           </div>
         </div>
         <div className="row">
           {props.events.length === 0 &&
-            <div className="col text-center">
+          <>
+            <div className="col-12 text-center mt-3">
+              <NoDataSvg/>
+            </div>
+            <div className="col-12 text-center mt-3">
               <p>Il n'y a pas encore d'évenements organisés proche de votre localisation</p>
             </div>
+          </>
           }
           {props.events && props.events.map((event, index) => (
             <React.Fragment key={index}>
@@ -26,7 +37,6 @@ const AgendaEvents = (props) => (
             }
             <div className={"col-12 col-md-4 mt-3"} key={index}>
               <EventCard
-                handleEventSelected={props.handleEventSelected}
                 event={event}
                 handleMapView={props.handleMapView}
                 distance={

@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 import WizardUserFormFirstPage from "./WizardUserFormFirstPage";
-import WizardUserFormSecondPage from "./WizardUserFormSecondPage";
 import WizardUserFormThirdPage from "./WizardUserFormThirdPage";
 
 export default [
@@ -9,28 +8,15 @@ export default [
     id: 'ids',
     component: WizardUserFormFirstPage,
     initialValues: {
-      firstName: '',
-      lastName: '',
+      name: '',
       email: ''
     },
     validationSchema: Yup.object().shape({
-      firstName: Yup.string()
-        .required('Le prénom est requis'),
-      lastName: Yup.string()
+      name: Yup.string()
         .required('Le nom est requis'),
       email: Yup.string()
         .email('L\'addresse email est invalide')
         .required('L\'email est requis'),
-    }),
-  },
-  {
-    id: 'skills',
-    component: WizardUserFormSecondPage,
-    initialValues: {
-      mainSkill: '',
-    },
-    validationSchema: Yup.object().shape({
-      mainSkill: Yup.string().required()
     }),
   },
   {

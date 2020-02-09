@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import orderByDistance from 'geolib/es/orderByDistance';
 import isPointWithinRadius from "geolib/es/isPointWithinRadius";
 import Map from "./../components/event/LeafletMap";
@@ -9,35 +9,45 @@ import AccountLink from "../components/AccountLink";
 import SearchBar from "../components/SearchBar";
 import FullScreenLoader from "../components/FullScreenLoader";
 import AgendaEvents from "../components/event/AgendaEvents";
-import defaultsEvents from "../config/defaultEvents";
+import {list, reset} from "../actions/event/list";
+import {connect} from "react-redux";
 
 const HomePage = (props) => {
   const [userPosition, setUserPosition] = useState({ latitude: 44.8337080, longitude: -0.5821208, addressName:  "38 Rue Lacornée, 33000 Bordeaux France" });
   const [radius, setRadius] = useState(5000);
-  const [eventSelected, setEventSelected] = useState(false);
   const [mapCenter, setMapCenter] = useState([ 44.8337080, -0.5821208]);
   const [mapView, setMapView] = useState(false);
-  const [events, setEvents] = useState(defaultsEvents.filter((event) => {
-    return isPointWithinRadius(
-      {latitude: event.latitude, longitude: event.longitude},
-      {latitude: userPosition.latitude, longitude: userPosition.longitude},
-      radius
-    )
-  }));
-  const [calculatingNearestEvents, setCalculatingNearestEvents] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleUserPositionSelected = ({lat, lng}, addressName) => {
-    setCalculatingNearestEvents(true);
-
-    const eventsInRadius = defaultsEvents.filter((event) => {
+  const filterEvents = (events, { latitude, longitude }) => {
+    return orderByDistance({latitude, longitude}, events.filter((event) => {
       return isPointWithinRadius(
-         {latitude: event.latitude, longitude: event.longitude},
-        {latitude: lat, longitude: lng},
+        {latitude: event.latitude, longitude: event.longitude},
+        {latitude: latitude, longitude: longitude},
         radius
       )
-    });
+    }))
+  };
 
-    setEvents(orderByDistance({latitude: lat, longitude: lng}, eventsInRadius));
+  useEffect(() => {
+    props.list(
+      props.match.params.page &&
+      decodeURIComponent(props.match.params.page))
+    }, []);
+
+  useEffect(() => {
+    if (props.retrieved && props.retrieved['hydra:member'].length !== events.length) {
+      setEvents(props.retrieved['hydra:member']);
+      setFilteredEvents(filterEvents(props.retrieved['hydra:member'], {latitude: userPosition.latitude, longitude: userPosition.longitude}))
+      setLoading(false);
+    }
+  });
+
+  const handleUserPositionSelected = ({lat, lng}, addressName) => {
+    setLoading(true);
+    setFilteredEvents(filterEvents(events, {latitude: lat, longitude: lng}));
     setUserPosition({
       latitude: lat,
       longitude: lng,
@@ -47,31 +57,14 @@ const HomePage = (props) => {
       lat,
       lng
     ]);
-    setTimeout(() => {setCalculatingNearestEvents(false)}, 800);
+    setTimeout(() => {setLoading(false)}, 800);
   };
 
   const handleChangeRadius = (radiusElement) => {
-    setCalculatingNearestEvents(true);
-
+    setLoading(true);
     setRadius(radiusElement.target.value);
-    const eventsInRadius = defaultsEvents.filter((event) => {
-      return isPointWithinRadius(
-        {latitude: event.latitude, longitude: event.longitude},
-        {latitude: userPosition.latitude, longitude: userPosition.longitude},
-        radiusElement.target.value
-      )
-    });
-
-    setEvents(orderByDistance({latitude: userPosition.latitude, longitude: userPosition.longitude}, eventsInRadius));
-    setTimeout(() => {setCalculatingNearestEvents(false)}, 800);
-  };
-
-  const handleEventSelected = swipeIndex => {
-    setEventSelected(events[swipeIndex]);
-    setMapCenter([
-      events[swipeIndex].latitude,
-      events[swipeIndex].longitude
-    ])
+    setFilteredEvents(filterEvents(events, {latitude: userPosition.latitude, longitude: userPosition.longitude}))
+    setTimeout(() => {setLoading(false)}, 800);
   };
 
   const handleMapView = event => {
@@ -85,7 +78,7 @@ const HomePage = (props) => {
 
   return (
     <Layout {...props}>
-      {calculatingNearestEvents &&
+      {(loading || props.loading) &&
       <FullScreenLoader/>
       }
       <AccountLink/>
@@ -94,20 +87,17 @@ const HomePage = (props) => {
         radius={radius}
         handleChangeRadius={handleChangeRadius}
       />
-      {!calculatingNearestEvents &&
+      {!loading &&
       <>
         <AgendaEvents
-          events={events}
-          eventSelected={eventSelected}
-          handleEventSelected={handleEventSelected}
+          events={filteredEvents}
           userPosition={userPosition}
           handleMapView={handleMapView}
         />
         {mapView &&
         <Map
           center={mapCenter}
-          eventSelected={eventSelected}
-          events={events}
+          events={filteredEvents}
           handleCloseMapView={handleCloseMapView}
         />
         }
@@ -116,4 +106,18 @@ const HomePage = (props) => {
     </Layout>
   )
 };
-export default HomePage;
+const mapStateToProps = state => {
+  const {
+    retrieved,
+    loading,
+    error,
+    eventSource,
+    deletedItem
+  } = state.event.list;
+  return { retrieved, loading, error, eventSource, deletedItem };
+};
+const mapDispatchToProps = dispatch => ({
+  list: page => dispatch(list(page)),
+  reset: eventSource => dispatch(reset(eventSource))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -64,13 +64,11 @@ function FormWrapper({
 const Register = (props) => {
   const handleSubmit = React.useCallback((values) => {
     const body = JSON.parse(JSON.stringify(values));
-    body.firstName = values.ids.firstName;
-    body.lastName = values.ids.lastName;
+    body.name = values.ids.name;
     body.email = values.ids.email;
-    body.mainSkill = values.skills.mainSkill;
     body.password = values.password['password'];
 
-     return fetch('/users', { method: 'POST', body: JSON.stringify(body, ['firstName', 'lastName', 'email', 'mainSkill', 'password'], 4)  })
+     return fetch('/users', { method: 'POST', body: JSON.stringify(body, ['name', 'email', 'password'], 4)  })
        .then((response) => {
            return authentication.login(values.ids.email, values.password['password'])
              .then(

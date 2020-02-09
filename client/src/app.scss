@@ -102,6 +102,10 @@ span.logo {
         min-height: auto !important;
     }
 }
+.MuiPickersDay-day, .MuiPickersCalendarHeader-iconButton, .MuiPickersClockNumber-clockNumber {
+    color: black !important;
+    background-color: transparent !important;
+}
 .leaflet-container {
     height: 100vh;
     width: 100vw;
@@ -110,6 +114,11 @@ span.logo {
     left: 0;
     z-index: 100;
 }
+.show-password {
+    position: absolute;
+    top: 30px;
+    right: 0;
+}
 .map-close {
     position: absolute;
     top: 15px;
@@ -117,7 +126,7 @@ span.logo {
     z-index: 200;
     color: black;
 }
-.account-link-container {
+.absolute-top-right {
     position: absolute;
     top: 1rem;
     right: 15px;

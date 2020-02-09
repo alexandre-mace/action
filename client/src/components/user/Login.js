@@ -65,16 +65,26 @@ class Login extends React.Component {
                       return (
                       <Form>
                         <div className="form-group">
-                          <Field component={TextField<{helperText: "Incorrect entry."}}
-
-                                 name="email" margin='normal' type="text"
-                                 label="Votre email"/>
+                          <Field
+                            component={TextField}
+                            name="email"
+                            margin='normal'
+                            type="text"
+                            label="Votre email"
+                            fullWidth
+                          />
                           <ErrorMessage name="email" component="div" className="invalid-feedback"/>
                         </div>
-                        <div className="form-group">
-                          <Field component={TextField<{helperText: "Incorrect entry."}} name="password" margin='normal' type={this.state.showPassword ? 'text' : 'password'}
-                                 label="Votre mot de passe"/>
-                           <VisibilityIcon onClick={() => this.toggleShowPassword()} color={this.state.showPassword ? "primary" : "disabled"}/>
+                        <div className="form-group d-flex position-relative">
+                          <Field
+                            component={TextField}
+                            name="password"
+                            margin='normal'
+                            type={this.state.showPassword ? 'text' : 'password'}
+                            label="Votre mot de passe"
+                            fullWidth
+                          />
+                           <VisibilityIcon className={"show-password"} onClick={() => this.toggleShowPassword()} color={this.state.showPassword ? "primary" : "disabled"}/>
                           <ErrorMessage name="password" component="div" className="invalid-feedback"/>
                         </div>
                         <div className="form-group">
@@ -84,6 +94,7 @@ class Login extends React.Component {
                             <Button
                               disabled={Object.entries(touched).length === 0 || (Object.entries(touched).length > 0 && Object.entries(errors).length > 0 )}
                               type="submit"
+                              variant="contained"
                               color={'primary'}>Se connecter</Button>
                           )}
                         </div>

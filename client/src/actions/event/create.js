@@ -14,6 +14,11 @@ export function success(created) {
 }
 
 export function create(values) {
+
+  if (values['date'] && typeof values.date === 'string') {
+    console.log(values)
+    values['date'] = values['date'].replace(/\//g, '-')
+  }
   return dispatch => {
     dispatch(loading(true));
 

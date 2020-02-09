@@ -1,11 +1,11 @@
-import {Link} from "react-router-dom";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import React from "react";
+import {Link} from "react-router-dom";
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 const AccountLink = () => (
-  <div className="account-link-container">
+  <div className="absolute-top-right">
     <Link to={"/compte"}>
-      <AccountBoxIcon style={{fontSize: "45px"}} className="account-link-icon"/>
+      <AccountCircleRoundedIcon style={{fontSize: "45px"}} className="account-link-icon"/>
     </Link>
   </div>
 );

@@ -15,6 +15,12 @@ import Button from '@material-ui/core/Button';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import event from "../../routes/event";
+import getHours from 'date-fns/getHours'
+import getDay from 'date-fns/getDay'
+import getMonth from 'date-fns/getMonth'
+import getMinutes from 'date-fns/getMinutes'
+import format from 'date-fns/format'
+import RoomRoundedIcon from '@material-ui/icons/RoomRounded';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -58,6 +64,11 @@ function EventCard(props) {
   if (props.event.forum) {
     totalMessages = props.event.forum.messages.length
   }
+
+  let eventDate = new Date(props.event.date.slice(0, 19));
+  console.log(new Date(props.event.date.slice(0, 19)))
+  console.log(format(new Date(props.event.date.slice(0, 19)), 'dd'))
+
   return (
     <Card key={props.event['@id']} className={classes.card}>
       <Link to={`les-projets/${encodeURIComponent(props.event['@id'])}`}>
@@ -75,24 +86,30 @@ function EventCard(props) {
         </CardContent>
       </Link>
 
-      <CardActions className={'mt-auto d-flex justify-content-between pt-0'} disableSpacing>
-        <div className="d-flex justify-content-between flex-grow-1 p-1">
-          <div className="d-flex flex-column">
-            <div className="font-weight-bold">16/02</div>
-            <div  className="font-weight-light">19h</div>
-            <div onClick={() => props.handleMapView(props.event)}>voir sur la carte</div>
+      <CardActions className={'mt-auto d-flex flex-column pt-0'} disableSpacing>
+        <div className={"d-flex justify-content-between align-items-center w-100 px-2"}>
+          <div>
+            <Typography variant={"h6"} className="font-weight-bold">{format(eventDate, 'dd')}/{format(eventDate, 'MM')}</Typography>
+            <Typography variant={"body1"} className="font-weight-light">{format(eventDate, 'HH')}h{format(eventDate, 'mm') !== 0 ? format(eventDate, 'mm') : ''}</Typography>
           </div>
           <div>
-            {props.distance ? props.distance : ''}
+              <Typography variant={"h5"}>
+                {props.distance ? props.distance : ''}
+              </Typography>
           </div>
         </div>
-        <div className="d-flex">
-          <IconButton color="secondary" size="medium">
-            <BookmarkIcon fontSize="large"/>
-          </IconButton>
-            <IconButton color="primary">
-            <EventAvailableIcon fontSize="large"/>
+        <div className={"d-flex justify-content-between align-items-center w-100"}>
+          <div onClick={() => props.handleMapView(props.event)}>
+            <RoomRoundedIcon fontSize="large"/>
+          </div>
+          <div className="d-flex">
+            <IconButton color="secondary" size="medium">
+              <BookmarkIcon fontSize="large"/>
             </IconButton>
+            <IconButton color="primary">
+              <EventAvailableIcon fontSize="large"/>
+            </IconButton>
+          </div>
         </div>
       </CardActions>
     </Card>

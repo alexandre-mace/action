@@ -8,6 +8,8 @@ export const authentication = {
 };
 
 function login(email, password) {
+  console.log(email)
+  console.log(password)
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify({ email, password })

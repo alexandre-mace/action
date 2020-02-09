@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, change } from 'redux-form';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { DateTimePicker } from "@material-ui/pickers";
+import SearchInput from "../SearchInput";
 
 class Form extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     error: PropTypes.string
+  };
+
+  setPosition = ({lat, lng}) => {
+    this.props.dispatch(change('event', 'latitude', lat));
+    this.props.dispatch(change('event', 'longitude', lng));
   };
 
   renderField = data => {
@@ -21,7 +27,21 @@ class Form extends Component {
     if (this.props.error && data.meta.touched && !data.meta.error) {
       data.input.className += ' is-valid';
     }
-    console.log(data)
+
+    let currentDateValue = new Date()
+    if (data.type === 'dateTime') {
+      if (typeof data.input.value === 'string' && data.input.value !== "") {
+        let date = data.input.value.split(' ')[0];
+        let time = data.input.value.split(' ')[1];
+        let year = parseInt(date.split('/')[2]);
+        let month = parseInt(date.split('/')[1]);
+        let day = parseInt(date.split('/')[0]);
+        let hour = parseInt(time.split(':')[0]);
+        let minute = parseInt(time.split(':')[1]);
+
+        currentDateValue = new Date(year, month - 1, day, hour, minute, 0)
+      }
+    }
 
     return (
       <div className={`form-group`}>
@@ -31,21 +51,42 @@ class Form extends Component {
           {...data.input}
           type={data.type}
           step={data.step}
-          label={data.input.name}
+          label={data.label}
           required={data.required}
           placeholder={data.placeholder}
           id={`event_${data.input.name}`}
           fullWidth
+          multiline={data.multiline}
+          rows={data.rows}
         />
         }
         {data && data.type === 'dateTime' &&
         <DateTimePicker
           {...data.input}
-          value={data.input.value ? data.input.value : new Date()}
+          onChange={(value) => {
+            this.props.dispatch(change('event', 'date', value));
+          }}
+          autoOk
+          format="dd/MM/yyyy HH:mm"
+          value={
+            typeof data.input.value === "object"
+              ? data.input.value
+              : data.input.value !== ''
+                ? currentDateValue
+                : new Date()
+          }
+          ampm={false}
           disablePast
-          label={data.input.name}
-          showTodayButton
+          label={data.label}
+          fullWidth
         />
+        }
+        {data && data.type === 'address' &&
+          <SearchInput
+            {...data.input}
+            label={data.label}
+            setPosition={this.setPosition}
+          />
         }
         {isInvalid && <div className="invalid-feedback">{data.meta.error}</div>}
       </div>
@@ -59,32 +100,34 @@ class Form extends Component {
           component={this.renderField}
           name="name"
           type="text"
-          placeholder=""
+          label="Nom"
           required={true}
         />
         <Field
           component={this.renderField}
           name="description"
           type="text"
-          placeholder=""
+          label="Description"
           required={true}
+          multiline
+          rows="4"
         />
         <Field
           component={this.renderField}
           name="date"
           type="dateTime"
-          placeholder=""
+          label="Date"
           required={true}
         />
         <Field
           component={this.renderField}
           name="address"
-          type="text"
-          placeholder=""
+          type="address"
+          label="Adresse"
           required={true}
         />
         <Button color="primary" type="submit" variant="contained">
-          Submit
+          Ajouter l'évenement
         </Button>
       </form>
     );
@@ -94,5 +137,8 @@ class Form extends Component {
 export default reduxForm({
   form: 'event',
   enableReinitialize: true,
-  keepDirtyOnReinitialize: true
+  keepDirtyOnReinitialize: true,
+  initialValues: {
+    'date': new Date()
+  }
 })(Form);

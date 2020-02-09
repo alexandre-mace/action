@@ -18,12 +18,19 @@ class Create extends Component {
     this.props.reset();
   }
 
+  test(params) {
+    console.log(params)
+  }
+
   render() {
     if (this.props.created)
       return (
         <Redirect
-          to={`edit/${encodeURIComponent(this.props.created['@id'])}`}
+          to={`/`}
         />
+        // <Redirect
+        //   to={`edit/${encodeURIComponent(this.props.created['@id'])}`}
+        // />
       );
 
     return (
@@ -40,7 +47,13 @@ class Create extends Component {
           </div>
         )}
 
-        <Form onSubmit={this.props.create} values={this.props.item} />
+        <div className="container mt-5">
+          <div className="row">
+            <div className="col">
+              <Form onSubmit={this.props.create} values={this.props.item} />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
