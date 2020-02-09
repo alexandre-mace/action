@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { render } from 'react-dom'
 import L from 'leaflet';
 import {Map, Popup, TileLayer, ZoomControl} from 'react-leaflet'
@@ -11,16 +11,25 @@ import { Animate }  from 'react-simple-animate';
 let zoom = 10;
 
 const LeafletMap = (props) => {
+  const [playAnimation, setPlayAnimation] = useState(true);
+
   window.dispatchEvent(new Event('resize'));
 
   if (props.eventSelected) {
     zoom = 12;
   }
 
+  const handleCloseMapView = () => {
+    setPlayAnimation(false);
+    setTimeout(() => {
+      props.handleCloseMapView()
+    }, 900)
+  }
+
   return (
     <div className="full-screen-map">
     <Animate
-      play={true} // set play true to start the animation
+      play={playAnimation} // set play true to start the animation
       duration={0.9} // how long is the animation duration
       start={{ transform: 'translate(100vw, 0)' }}
       end={{ transform: 'translate(0, 0)' }}
@@ -46,7 +55,7 @@ const LeafletMap = (props) => {
       )}
     </Map>
       <div className={"map-close"}>
-        <CloseIcon fontSize={"large"} onClick={() => props.handleCloseMapView()}/>
+        <CloseIcon fontSize={"large"} onClick={() => handleCloseMapView()}/>
       </div>
     </Animate>
   </div>
