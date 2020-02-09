@@ -106,13 +106,18 @@ span.logo {
     color: black !important;
     background-color: transparent !important;
 }
-.leaflet-container {
+.full-screen-map {
     height: 100vh;
     width: 100vw;
     position: absolute;
+    display: block;
     top: 0;
     left: 0;
     z-index: 100;
+}
+.leaflet-container {
+    height: 100vh;
+    width: 100vw;
 }
 .show-password {
     position: absolute;
@@ -123,7 +128,7 @@ span.logo {
     position: absolute;
     top: 15px;
     left: 15px;
-    z-index: 200;
+    z-index: 2000;
     color: black;
 }
 .absolute-top-right {

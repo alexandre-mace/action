@@ -10077,6 +10077,11 @@ react-scripts@^3.1.2:
   optionalDependencies:
     fsevents "2.1.2"
 
+react-simple-animate@^3.3.6:
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/react-simple-animate/-/react-simple-animate-3.3.6.tgz#85ee92381d1ff5ffafa330ce9d0dc88fc61ca3ff"
+  integrity sha512-/aURgwg/LJs5wXj1YVuyNG6L25HLkXrHcdpy42+i/AbmWHlrVBbHHeZuDdiJc5ozZ2Nghn/HTswbAXGobzM8AA==
+
 react-swipeable-views-core@^0.13.1, react-swipeable-views-core@^0.13.6:
   version "0.13.6"
   resolved "https://registry.yarnpkg.com/react-swipeable-views-core/-/react-swipeable-views-core-0.13.6.tgz#361f432ab33e22fec0c3576fe034b864ac60c015"
