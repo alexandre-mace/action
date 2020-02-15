@@ -39,16 +39,15 @@ const InterestedEvents = (props) => {
 
       {!props.loading &&
       <div className="container mt-5 bottom-navigation-padding">
-        <div className="row">
           {user && events && events.length === 0 &&
-          <>
-            <div className="col-12 text-center mt-3">
+          <div className="row">
+            <div className="col-12 text-center mt-5">
               <NoDataSvg/>
             </div>
             <div className="col-12 text-center mt-3">
               <p>Vous n'avez pas encore indiqué que vous étiez intéressé ou que vous participez à un évenement</p>
             </div>
-          </>
+          </div>
           }
           {events && events.length > 0 &&
           <div className="row">
@@ -61,7 +60,8 @@ const InterestedEvents = (props) => {
             </div>
           </div>
           }
-          {events && events.map((event, index) => (
+        <div className="row">
+        {events && events.map((event, index) => (
             <React.Fragment key={index}>
               {(!events[index - 1] || events[index - 1] && !isSameDay(events[index - 1].date, event.date)) &&
               <div className={"col-12 text-center mt-3"}>

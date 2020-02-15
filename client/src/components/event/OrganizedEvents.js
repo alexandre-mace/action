@@ -42,11 +42,11 @@ const OrganizedEvents = (props) => {
       <div className="container mt-5 bottom-navigation-padding">
         {user && events && events.length === 0 &&
         <div className="row">
-          <div className="col-12 text-center mt-3">
+          <div className="col-12 text-center mt-5">
             <NoDataSvg/>
           </div>
           <div className="col-12 text-center mt-3">
-            <p>Vous n'aviez pas encore organisé d'évenement</p>
+            <p>Aucun évenement organisé pour l'instant</p>
           </div>
         </div>
         }
