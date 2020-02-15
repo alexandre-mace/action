@@ -2,10 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import orderByDistance from 'geolib/es/orderByDistance';
 import isPointWithinRadius from "geolib/es/isPointWithinRadius";
 import Map from "./../components/event/LeafletMap";
-import MapEvents from "../components/event/MapEvents";
-import Layout from "../components/Layout";
-import Logo from "../components/Logo";
-import AccountLink from "../components/AccountLink";
 import SearchBar from "../components/SearchBar";
 import FullScreenLoader from "../components/FullScreenLoader";
 import AgendaEvents from "../components/event/AgendaEvents";
@@ -98,7 +94,7 @@ const MainEventSearch = props => {
         {mapView &&
         <Map
           center={mapCenter}
-          events={filteredEvents}
+          event={{latitude: mapCenter[0], longitude: mapCenter[1]}}
           handleCloseMapView={handleCloseMapView}
         />
         }

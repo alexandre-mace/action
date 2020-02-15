@@ -121,7 +121,8 @@ span.logo {
     display: block;
     top: 0;
     left: 0;
-    z-index: 100;
+    bottom: 0;
+    z-index: 10000;
 }
 .leaflet-container {
     height: 100vh;
@@ -188,7 +189,7 @@ span.logo {
     }
 }
 .full-screen-page {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
