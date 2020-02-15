@@ -8,7 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {bottomNavigationLinks} from "../config/bottomNavigationLinks";
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-import {authentication} from "../utils/authentication";
+import {authentication} from "../utils/authentication/authentication";
 import Typography from "@material-ui/core/Typography";
 import {Badge, FormControlLabel} from "@material-ui/core";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -81,28 +81,21 @@ const AppBottomNavigation = (props) => {
             className={classes.root}
         >
             {bottomNavigationLinks.map((bottomNavigationLink, index) => {
-                const SpecificIcon = bottomNavigationIcons[bottomNavigationLink.icon]
-                if (bottomNavigationLink.label === 'Mon compte' && !authentication.currentUserValue) {
-                    return (
-                        <BottomNavigationAction key={index} className={classes.bottomNavAction} value={'/se-connecter'} label={'Se connecter'}
-                                                icon={<MeetingRoomIcon/>}/>
-                    )
-                }
-                if (bottomNavigationLink.label === 'Mon compte' && authentication.currentUserValue && props.user) {
-                    return (
-                        <BottomNavigationAction
-                            key={index}
-                            className={classes.bottomNavAction}
-                            value={'/' + bottomNavigationLink.route}
-                            label={bottomNavigationLink.label}
-                            icon={<Badge badgeContent={props.notifications} color={"primary"}><SpecificIcon /></Badge>}
-                        />
-                    )
-                }
+                const SpecificIcon = bottomNavigationIcons[bottomNavigationLink.icon];
 
-                return (<BottomNavigationAction key={index} className={classes.bottomNavAction} value={'/' + bottomNavigationLink.route} label={bottomNavigationLink.label}
-                                        icon={<SpecificIcon/>}/>)
+                if ((!authentication.currentUserValue && bottomNavigationLink.private === false) || authentication.currentUserValue) {
+                    return (<BottomNavigationAction key={index} className={classes.bottomNavAction} value={'/' + bottomNavigationLink.route} label={bottomNavigationLink.label}
+                                                    icon={<SpecificIcon/>}/>)
+                }
             })}
+            {!authentication.currentUserValue &&
+            <BottomNavigationAction
+                className={classes.bottomNavAction}
+                value={'/se-connecter'}
+                label={'Se connecter'}
+                icon={<MeetingRoomIcon/>}
+            />
+            }
         </BottomNavigation>
     );
 }
