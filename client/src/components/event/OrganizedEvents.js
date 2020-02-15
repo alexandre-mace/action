@@ -97,8 +97,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  retrieve: id => dispatch(retrieve(id)),
-  reset: eventSource => dispatch(reset(eventSource))
+  retrieve: id => dispatch(retrieve(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrganizedEvents);
