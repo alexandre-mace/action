@@ -3,10 +3,10 @@ import React from "react";
 import displayMeters from "../../utils/displayMeters";
 import getDistance from "geolib/es/getDistance";
 import isSameDay from "../../utils/isSameDay";
-import NoDataSvg from "../../utils/NoDataSvg";
+import NoDataSvg from "../../utils/svg/NoDataSvg";
 
 const AgendaEvents = (props) => (
-      <div className="container mt-5">
+      <div className="container mt-5 bottom-navigation-padding">
         <div className="row">
           <div className="col text-center">
             <p>

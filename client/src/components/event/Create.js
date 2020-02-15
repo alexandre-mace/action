@@ -18,15 +18,11 @@ class Create extends Component {
     this.props.reset();
   }
 
-  test(params) {
-    console.log(params)
-  }
-
   render() {
     if (this.props.created)
       return (
         <Redirect
-          to={`/`}
+          to={`/confirmation-evenement-ajouté`}
         />
         // <Redirect
         //   to={`edit/${encodeURIComponent(this.props.created['@id'])}`}
@@ -35,11 +31,6 @@ class Create extends Component {
 
     return (
       <div>
-        {this.props.loading && (
-          <div className="alert alert-info" role="status">
-            Loading...
-          </div>
-        )}
         {this.props.error && (
           <div className="alert alert-danger" role="alert">
             <span className="fa fa-exclamation-triangle" aria-hidden="true" />{' '}
@@ -50,7 +41,7 @@ class Create extends Component {
         <div className="container mt-5">
           <div className="row">
             <div className="col">
-              <Form onSubmit={this.props.create} values={this.props.item} />
+              <Form loading={this.props.loading} onSubmit={this.props.create} values={this.props.item} />
             </div>
           </div>
         </div>

@@ -3,10 +3,10 @@ import React, {useContext, useEffect} from "react";
 import displayMeters from "../../utils/displayMeters";
 import getDistance from "geolib/es/getDistance";
 import isSameDay from "../../utils/isSameDay";
-import NoDataSvg from "../../utils/NoDataSvg";
+import NoDataSvg from "../../utils/svg/NoDataSvg";
 import {reset, retrieve} from "../../actions/user/show";
 import {connect} from "react-redux";
-import {authentication} from "../../utils/authentication";
+import {authentication} from "../../utils/authentication/authentication";
 import AppContext from "../../config/appContext";
 import {Loader} from "../Loader";
 
@@ -38,7 +38,7 @@ const InterestedEvents = (props) => {
       )}
 
       {!props.loading &&
-      <div className="container mt-5">
+      <div className="container mt-5 bottom-navigation-padding">
         <div className="row">
           {user && events && events.length === 0 &&
           <>

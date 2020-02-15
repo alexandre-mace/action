@@ -3,12 +3,12 @@ import React, {useContext, useEffect} from "react";
 import displayMeters from "../../utils/displayMeters";
 import getDistance from "geolib/es/getDistance";
 import isSameDay from "../../utils/isSameDay";
-import NoDataSvg from "../../utils/NoDataSvg";
-import {reset, retrieve} from "../../actions/user/show";
-import {connect} from "react-redux";
-import {authentication} from "../../utils/authentication";
+import NoDataSvg from "../../utils/svg/NoDataSvg";
+import {retrieve} from "../../actions/user/show";
+import {authentication} from "../../utils/authentication/authentication";
 import AppContext from "../../config/appContext";
 import {Loader} from "../Loader";
+import {connect} from "react-redux";
 
 const OrganizedEvents = (props) => {
   useEffect(() => {
@@ -39,29 +39,29 @@ const OrganizedEvents = (props) => {
       )}
 
       {!props.loading &&
-      <div className="container mt-5">
+      <div className="container mt-5 bottom-navigation-padding">
+        {user && events && events.length === 0 &&
         <div className="row">
-          {user && events && events.length === 0 &&
-          <>
-            <div className="col-12 text-center mt-3">
-              <NoDataSvg/>
-            </div>
-            <div className="col-12 text-center mt-3">
-              <p>Vous n'aviez pas encore organisé d'évenement</p>
-            </div>
-          </>
-          }
-          {events && events.length > 0 &&
-          <div className="row">
-            <div className="col text-center">
-              <p>
-              <span className="font-weight-bold">
-                {props.events.length}
-              </span> {props.events.length === 1 ? 'évenement trouvé' : 'évenements trouvés'}
-              </p>
-            </div>
+          <div className="col-12 text-center mt-3">
+            <NoDataSvg/>
           </div>
-          }
+          <div className="col-12 text-center mt-3">
+            <p>Vous n'aviez pas encore organisé d'évenement</p>
+          </div>
+        </div>
+        }
+        {events && events.length > 0 &&
+        <div className="row">
+          <div className="col text-center">
+            <p>
+              <span className="font-weight-bold">
+                {events.length}
+              </span> {events.length === 1 ? 'évenement organisé' : 'évenements organisés'}
+            </p>
+          </div>
+        </div>
+        }
+        <div className="row">
           {events && events.map((event, index) => (
             <React.Fragment key={index}>
               {(!events[index - 1] || events[index - 1] && !isSameDay(events[index - 1].date, event.date)) &&

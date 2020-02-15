@@ -23,7 +23,7 @@ import format from 'date-fns/format'
 import RoomRoundedIcon from '@material-ui/icons/RoomRounded';
 import {reset, retrieve, update} from "../../actions/event/update";
 import {del} from "../../actions/event/delete";
-import {authentication} from "../../utils/authentication";
+import {authentication} from "../../utils/authentication/authentication";
 
 const useStyles = makeStyles(theme => ({
   card: {

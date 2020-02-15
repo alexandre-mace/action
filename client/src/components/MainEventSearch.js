@@ -88,7 +88,7 @@ const MainEventSearch = props => {
         radius={radius}
         handleChangeRadius={handleChangeRadius}
       />
-      {!loading &&
+      {(!props.loading && !loading) &&
       <>
         <AgendaEvents
           events={filteredEvents}

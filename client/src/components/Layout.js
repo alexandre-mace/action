@@ -48,7 +48,9 @@ const Layout = (props) => {
               {props.location.pathname !=='/compte' &&
                 <AccountLink/>
               }
+              {(props.location.pathname !== '/se-connecter' && props.location.pathname !== '/s\'inscrire') &&
               <AppBottomNavigation {...props}/>
+              }
             </>
             }
             {props.children}

@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { DateTimePicker } from "@material-ui/pickers";
 import SearchInput from "../SearchInput";
+import {LinearProgress} from "@material-ui/core";
 
 class Form extends Component {
   static propTypes = {
@@ -126,9 +127,16 @@ class Form extends Component {
           label="Adresse"
           required={true}
         />
+        {!this.props.loading &&
         <Button color="primary" type="submit" variant="contained">
           Ajouter l'évenement
         </Button>
+        }
+        {this.props.loading &&
+        <div className={"w-100"}>
+          <LinearProgress/>
+        </div>
+        }
       </form>
     );
   }

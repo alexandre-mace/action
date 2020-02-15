@@ -4,17 +4,12 @@ import HomeLink from "../components/HomeLink";
 import {Link} from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
-import {authentication} from "../utils/authentication";
+import {authentication} from "../utils/authentication/authentication";
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import {Typography} from "@material-ui/core";
+import logout from "../utils/authentication/logout";
 
 const AccountPage = props => {
-  const logout = () => {
-    authentication.logout()
-    this.props.history.push('/')
-  }
-
   return (
     <Layout {...props}>
       <HomeLink/>
@@ -45,8 +40,7 @@ const AccountPage = props => {
             <Button
               variant="contained"
               startIcon={<ExitToAppRoundedIcon />}
-              onClick={() => logout()}
-
+              onClick={() => logout(props.history)}
             >
               Se déconnecter
             </Button>
