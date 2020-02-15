@@ -1,5 +1,5 @@
-import { handleResponse } from './handle-response';
-import {fetch} from "./dataAccess";
+import { handleResponse } from '../handle-response';
+import {fetch} from "../dataAccess";
 
 export const authentication = {
     login,

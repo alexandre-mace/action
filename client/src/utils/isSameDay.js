@@ -1,5 +1,4 @@
 export default function isSameDay(date1string, date2string) {
-  console.log(date2string)
   const date1 = new Date(date1string);
   const date2 = new Date(date2string);
 
