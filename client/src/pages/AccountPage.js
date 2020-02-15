@@ -39,20 +39,8 @@ const AccountPage = props => {
             </Link>
           </div>
         </div>
-        <div className="row mt-3">
-          <div className="col text-center">
-            <Link to={"/ajouter-un-evenement"}>
-              <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<FavoriteRoundedIcon />}
-              >
-                Mes évenements intéressés
-              </Button>
-            </Link>
-          </div>
-        </div>
-        <div className="row mt-3">
+        <div className="container position-absolute-bottom-center">
+          <div className="row">
           <div className="col text-center">
             <Button
               variant="contained"
@@ -62,6 +50,7 @@ const AccountPage = props => {
             >
               Se déconnecter
             </Button>
+          </div>
           </div>
         </div>
       </div>
