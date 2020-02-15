@@ -50,7 +50,18 @@ const InterestedEvents = (props) => {
             </div>
           </>
           }
-          {user && events && events.map((event, index) => (
+          {events && events.length > 0 &&
+          <div className="row">
+            <div className="col text-center">
+              <p>
+              <span className="font-weight-bold">
+                {props.events.length}
+              </span> {props.events.length === 1 ? 'évenement trouvé' : 'évenements trouvés'}
+              </p>
+            </div>
+          </div>
+          }
+          {events && events.map((event, index) => (
             <React.Fragment key={index}>
               {(!events[index - 1] || events[index - 1] && !isSameDay(events[index - 1].date, event.date)) &&
               <div className={"col-12 text-center mt-3"}>

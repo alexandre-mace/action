@@ -17,6 +17,17 @@ const AgendaEvents = (props) => (
             </p>
           </div>
         </div>
+        {props.events && props.events.length > 0 &&
+        <div className="row">
+          <div className="col text-center">
+            <p>
+              <span className="font-weight-bold">
+                {props.events.length}
+              </span> {props.events.length === 1 ? 'évenement trouvé' : 'évenements trouvés'}
+            </p>
+          </div>
+        </div>
+        }
         <div className="row">
           {props.events.length === 0 &&
           <>
