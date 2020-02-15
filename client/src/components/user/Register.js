@@ -4,13 +4,13 @@ import {connect} from "react-redux";
 import {retrieve} from "../../actions/user/show";
 import {FormikWizard} from 'formik-wizard'
 import steps from './steps'
-import {authentication} from "../../utils/authentication";
+import {authentication} from "../../utils/authentication/authentication";
 import {fetch} from "../../utils/dataAccess";
-import AuthenticationSvg from "../../utils/AuthenticationSvg";
+import AuthenticationSvg from "../../utils/svg/AuthenticationSvg";
 import {LinearProgress, Typography} from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 
-function FormWrapper({
+function RegisterFormWrapper({
                        children,
                        isLastStep,
                        status,
@@ -37,7 +37,7 @@ function FormWrapper({
         {(canGoBack && !isSubmitting) &&
         <>
           <div className="mt-3 w-100" onClick={goToPreviousStep}>
-            <Button color={'secondary'}>Précedent</Button>
+            <Button className={"w-100"} variant={"contained"} color={'secondary'}>Précedent</Button>
           </div>
           <div className="mx-3"></div>
         </>
@@ -47,10 +47,11 @@ function FormWrapper({
             <LinearProgress/>
           </div>
         ) : (
-          <div className="mt-3 w-100">
+          <div className="mt-3 w-100 text-center">
             <Button
               type="submit"
-              className={canGoBack ? "next" :  "next w-100"}
+              variant={"contained"}
+              className={!canGoBack ? "next" :  "next w-100"}
               color={'primary'}
               disabled={Object.entries(touched).length === 0 || (Object.entries(touched).length > 0 && Object.entries(errors).length > 0 )}
             >{(isLastStep ? 'S\'inscrire' : 'Suivant')}</Button>
@@ -98,12 +99,12 @@ const Register = (props) => {
         <AuthenticationSvg/>
       </div>
       <Typography className={"mt-3"} variant={"h5"}>
-        S'inscrire à Seed
+        S'inscrire
       </Typography>
       <FormikWizard
         steps={steps}
         onSubmit={handleSubmit}
-        render={FormWrapper}
+        render={RegisterFormWrapper}
       />
     </>
     );

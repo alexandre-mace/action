@@ -1,7 +1,7 @@
 import React from 'react';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
-import { authentication } from '../../utils/authentication';
+import { authentication } from '../../utils/authentication/authentication';
 import { TextField } from 'formik-material-ui';
 import Button from '@material-ui/core/Button';
 import {
@@ -10,7 +10,7 @@ import {
 import {setAuthenticated} from "../../actions/authentication";
 import {connect} from "react-redux";
 import {retrieve} from "../../actions/user/show";
-import AuthenticationSvg from "../../utils/AuthenticationSvg";
+import AuthenticationSvg from "../../utils/svg/AuthenticationSvg";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
 class Login extends React.Component {
@@ -87,7 +87,7 @@ class Login extends React.Component {
                            <VisibilityIcon className={"show-password"} onClick={() => this.toggleShowPassword()} color={this.state.showPassword ? "primary" : "disabled"}/>
                           <ErrorMessage name="password" component="div" className="invalid-feedback"/>
                         </div>
-                        <div className="form-group">
+                        <div className="form-group text-center">
                           {isSubmitting ? (
                             <LinearProgress/>
                           ) : (
