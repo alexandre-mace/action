@@ -6,7 +6,6 @@ import AccountLink from "../components/AccountLink";
 const CreateEventPage = props => {
   return (
     <Layout {...props}>
-      <AccountLink/>
       <Create/>
     </Layout>
     )

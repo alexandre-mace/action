@@ -34,7 +34,6 @@ class Initiate extends Component {
     render() {
       return (
         <Layout {...this.props}>
-          <AccountLink/>
           <div className="form-center">
             <div className="container">
               <div className="row">

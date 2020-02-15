@@ -26,6 +26,8 @@ import OnBoardingPage from "./pages/OnBoardingPage";
 import {PrivateRoute} from "./utils/PrivateRoute";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import InterestedEventsPage from "./pages/InterestedEventsPage";
+import OrganizedEventsPage from "./pages/OrganizedEventsPage";
 
 const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL
@@ -50,6 +52,8 @@ ReactDOM.render(
         <Route path="/se-connecter" component={LoginPage} />
         <Route path="/s'inscrire" component={RegisterPage} />
         <PrivateRoute path="/compte" component={AccountPage}/>
+        <PrivateRoute path="/mon-agenda" component={InterestedEventsPage}/>
+        <PrivateRoute path="/mes-evenements" component={OrganizedEventsPage}/>
         <Route path="/bienvenue" component={OnBoardingPage} />
         <Route path="/" component={HomePage}/>
         <Route render={() => <h1>Not Found</h1>} />

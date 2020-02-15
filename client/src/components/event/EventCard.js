@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -21,11 +21,13 @@ import getMonth from 'date-fns/getMonth'
 import getMinutes from 'date-fns/getMinutes'
 import format from 'date-fns/format'
 import RoomRoundedIcon from '@material-ui/icons/RoomRounded';
+import {reset, retrieve, update} from "../../actions/event/update";
+import {del} from "../../actions/event/delete";
+import {authentication} from "../../utils/authentication";
 
 const useStyles = makeStyles(theme => ({
   card: {
     display: 'flex',
-    minHeight: "270px",
     height: '100%',
     flexDirection: 'column',
   },
@@ -58,7 +60,8 @@ const useStyles = makeStyles(theme => ({
 function EventCard(props) {
   const classes = useStyles();
 
-  const user = props.authenticated ? (props.updated ? props.updated : props.retrieved) : false;
+  const [interests, setInterests] = useState(props.event.interests);
+  const [participants, setParticipants] = useState(props.event.participants);
 
   let totalMessages = 0;
   if (props.event.forum) {
@@ -66,8 +69,38 @@ function EventCard(props) {
   }
 
   let eventDate = new Date(props.event.date.slice(0, 19));
-  console.log(new Date(props.event.date.slice(0, 19)))
-  console.log(format(new Date(props.event.date.slice(0, 19)), 'dd'))
+
+  const handleInterest = (event) => {
+    if (interests.includes(authentication.currentUserValue['@id'])) {
+      let eventInterestsWithoutUser = event.interests.filter(user => user !== authentication.currentUserValue['@id']);
+      props.update(event, {interests: eventInterestsWithoutUser})
+    } else {
+      props.update(event, {interests: [...event.interests, authentication.currentUserValue['@id']]})
+    }
+  };
+
+  const handleParticipate = (event) => {
+    if (participants.includes(authentication.currentUserValue['@id'])) {
+      let eventParticipantsWithoutUser = event.participants.filter(user => user !== authentication.currentUserValue['@id']);
+      props.update(event, {participants: eventParticipantsWithoutUser})
+    } else {
+      props.update(event, {participants: [...event.participants, authentication.currentUserValue['@id']]})
+    }
+  };
+
+  if (props.updated && props.updated['@id'] === props.event['@id'] && interests.length !== props.updated.interests.length) {
+    setInterests(props.updated.interests)
+  }
+  if (props.updated && props.updated['@id'] === props.event['@id'] && participants.length !== props.updated.participants.length) {
+    setParticipants(props.updated.participants)
+  }
+
+  const userInterested = authentication.currentUserValue
+    ? interests.includes(authentication.currentUserValue['@id'])
+    : false;
+  const userParticipates = authentication.currentUserValue
+    ? participants.includes(authentication.currentUserValue['@id'])
+    : false;
 
   return (
     <Card key={props.event['@id']} className={classes.card}>
@@ -89,8 +122,8 @@ function EventCard(props) {
       <CardActions className={'mt-auto d-flex flex-column pt-0'} disableSpacing>
         <div className={"d-flex justify-content-between align-items-center w-100 px-2"}>
           <div>
-            <Typography variant={"h6"} className="font-weight-bold">{format(eventDate, 'dd')}/{format(eventDate, 'MM')}</Typography>
-            <Typography variant={"body1"} className="font-weight-light">{format(eventDate, 'HH')}h{format(eventDate, 'mm') !== 0 ? format(eventDate, 'mm') : ''}</Typography>
+            {/*<Typography variant={"h6"} className="font-weight-bold">{format(eventDate, 'dd')}/{format(eventDate, 'MM')}</Typography>*/}
+            <Typography variant={"h6"} className="font-weight-light">{format(eventDate, 'HH')}h{format(eventDate, 'mm') !== 0 ? format(eventDate, 'mm') : ''}</Typography>
           </div>
           <div>
               <Typography variant={"h5"}>
@@ -103,11 +136,28 @@ function EventCard(props) {
             <RoomRoundedIcon fontSize="large"/>
           </div>
           <div className="d-flex">
-            <IconButton color="secondary" size="medium">
-              <BookmarkIcon fontSize="large"/>
+            {/*<IconButton className="z-index-10"*/}
+            {/*            color={user && projectAlreadyBoostedChecker(props.item['@id'], user.supportedProjects) ? 'primary' : 'default'}*/}
+            {/*            aria-label="add to favorites"*/}
+            {/*            onClick={() => props.handleBoost(props.item)}>*/}
+            {/*  <Badge badgeContent={props.item['likes']}>*/}
+            {/*    <FavoriteIcon />*/}
+            {/*  </Badge>*/}
+            <IconButton
+              color={userInterested ? 'primary' : 'secondary'}
+              size="medium"
+              onClick={() => handleInterest(props.event)}>
+              <Badge badgeContent={interests.length}>
+                <BookmarkIcon fontSize="large"/>
+              </Badge>
             </IconButton>
-            <IconButton color="primary">
-              <EventAvailableIcon fontSize="large"/>
+            <IconButton
+              color={'primary'}
+              size="medium"
+              onClick={() => handleParticipate(props.event)}>
+              <Badge badgeContent={participants.length}>
+                <EventAvailableIcon fontSize="large"/>
+              </Badge>
             </IconButton>
           </div>
         </div>
@@ -117,14 +167,21 @@ function EventCard(props) {
 }
 
 const mapStateToProps = state => ({
-  updated: state.user.update.updated,
-  retrieved: state.user.show.retrieved
+  updateError: state.event.update.updateError,
+  updateLoading: state.event.update.updateLoading,
+  deleteError: state.event.del.error,
+  deleteLoading: state.event.del.loading,
+  eventSource: state.event.update.eventSource,
+  created: state.event.create.created,
+  deleted: state.event.del.deleted,
+  updated: state.event.update.updated
 });
 
 const mapDispatchToProps = dispatch => ({
+  retrieve: id => dispatch(retrieve(id)),
+  update: (item, values) => dispatch(update(item, values)),
+  del: item => dispatch(del(item)),
+  reset: eventSource => dispatch(reset(eventSource))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EventCard);
+export default connect(mapStateToProps, mapDispatchToProps)(EventCard);

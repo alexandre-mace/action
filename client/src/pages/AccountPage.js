@@ -16,7 +16,7 @@ const AccountPage = props => {
   }
 
   return (
-    <Layout>
+    <Layout {...props}>
       <HomeLink/>
       <div className="container mt-5">
         <div className="row">

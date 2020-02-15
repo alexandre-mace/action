@@ -1,5 +1,6 @@
 import { SubmissionError } from 'redux-form';
 import { fetch } from '../../utils/dataAccess';
+import {authentication} from "../../utils/authentication";
 
 export function error(error) {
   return { type: 'EVENT_CREATE_ERROR', error };
@@ -16,9 +17,11 @@ export function success(created) {
 export function create(values) {
 
   if (values['date'] && typeof values.date === 'string') {
-    console.log(values)
     values['date'] = values['date'].replace(/\//g, '-')
   }
+
+  values['organizator'] = authentication.currentUserValue['@id'];
+
   return dispatch => {
     dispatch(loading(true));
 
