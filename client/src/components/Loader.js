@@ -3,7 +3,7 @@ import React from "react";
 
 export const Loader = ({size = 40}) => {
   return (
-    <div className="d-flex">
+    <div className="d-flex absolute-center">
       <div className="m-auto">
         <CircularProgress size={size}/>
       </div>
