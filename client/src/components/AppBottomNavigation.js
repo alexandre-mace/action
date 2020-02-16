@@ -3,16 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ListIcon from '@material-ui/icons/List';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddIcon from '@material-ui/icons/Add';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {bottomNavigationLinks} from "../config/bottomNavigationLinks";
+import {navigationLinks} from "../config/navigationLinks";
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import {authentication} from "../utils/authentication/authentication";
-import Typography from "@material-ui/core/Typography";
-import {Badge, FormControlLabel} from "@material-ui/core";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import Checkbox from "@material-ui/core/Checkbox";
 import BookmarksRoundedIcon from '@material-ui/icons/BookmarksRounded';
 import FolderSharedRoundedIcon from '@material-ui/icons/FolderSharedRounded';
 import EventRoundedIcon from '@material-ui/icons/EventRounded';
@@ -63,7 +58,7 @@ const AppBottomNavigation = (props) => {
     const classes = useStyles();
 
     let defaultValue = 0;
-    bottomNavigationLinks.forEach(bottomNavigationLink => {
+    navigationLinks.forEach(bottomNavigationLink => {
         if (('/' + bottomNavigationLink.route === props.history.location.pathname) || ('/se-connecter' === props.history.location.pathname)) {
             defaultValue = props.history.location.pathname;
         }
@@ -81,7 +76,7 @@ const AppBottomNavigation = (props) => {
             showLabels
             className={classes.root}
         >
-            {bottomNavigationLinks.map((bottomNavigationLink, index) => {
+            {navigationLinks.map((bottomNavigationLink, index) => {
                 const SpecificIcon = bottomNavigationIcons[bottomNavigationLink.icon];
 
                 if ((!authentication.currentUserValue && bottomNavigationLink.private === false) || authentication.currentUserValue) {

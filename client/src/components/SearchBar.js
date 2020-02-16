@@ -7,7 +7,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TuneIcon from '@material-ui/icons/Tune';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
 import {createMuiTheme, makeStyles} from "@material-ui/core/styles";
 import {ThemeProvider} from "@material-ui/styles";
 
@@ -96,9 +95,9 @@ const SearchBar = (props) => {
   return (
     <ThemeProvider theme={theme}>
 
-    <div className="container mt-2">
+    <div className="container mt-2 mt-md-5">
       <div className="row">
-        <div className="col-10 pr-0 col-md-6 offset-md-3">
+        <div className="col-10 pr-0 col-md-7 offset-md-2">
           <AlgoliaPlaces
             placeholder="Je recherche des évenements à "
             options={{
@@ -122,7 +121,7 @@ const SearchBar = (props) => {
             onError={({message}) => {}}
           />
         </div>
-        <div className="col-2 pl-0">
+        <div className="col-2 col-md-1 pl-0">
             <Button aria-describedby={id} className={"h-100 search-settings-button"} variant="contained" color="primary" onClick={handleClick}>
               <TuneIcon/>
             </Button>

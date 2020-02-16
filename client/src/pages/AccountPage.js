@@ -12,7 +12,6 @@ import logout from "../utils/authentication/logout";
 const AccountPage = props => {
   return (
     <Layout {...props}>
-      <HomeLink/>
       <div className="container mt-5">
         <div className="row">
           <div className="col">

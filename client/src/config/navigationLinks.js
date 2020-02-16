@@ -1,4 +1,4 @@
-export const bottomNavigationLinks = [
+export const navigationLinks = [
   {
     route: '',
     label: 'Découvrir',

@@ -15,6 +15,7 @@ const useStyles = makeStyles({
     backgroundColor: "transparent",
     display: 'flex',
     justifyContent: "center",
+    margin: "auto"
   },
   dot: {
     marginLeft: "8px",
@@ -66,7 +67,7 @@ const OnBoarding = () => {
                   </div>
                 </div>
                 <div className="col-12 text-center my-3 mt-md-5">
-                  <Typography variant="h6" gutterBottom className="no-bold">
+                  <Typography variant="h6" gutterBottom className="no-bold text-center m-auto">
                     Action est une plateforme d'évenement en faveur de l'environnement
                   </Typography>
                 </div>
@@ -93,7 +94,7 @@ const OnBoarding = () => {
                   </Typography>
                 </div>
                 <div className="col-12 text-center my-3 mt-md-5 d-flex align-items-center">
-                  <Typography variant="h6" gutterBottom className="no-bold">
+                  <Typography variant="h6" gutterBottom className="no-bold text-center m-auto">
                     Si tu veux organiser ou participer à un évenement en faveur de l'écologie, tu es au bon endroit 😄.
                   </Typography>
                 </div>
@@ -105,7 +106,7 @@ const OnBoarding = () => {
                     position="static"
                     activeStep={activeStep}
                   />
-                  <div className="col-12 text-center my-3 d-flex">
+                  <div className="col-12 text-center my-3 d-flex justify-content-center">
                     <Button className={"mr-2 w-100"} variant={"contained"} onClick={handleBack}>Précédent</Button>
                     <Button className={"ml-2 w-100"} variant={"contained"} color={"primary"} onClick={handleNext}>Suivant</Button>
                   </div>
@@ -119,8 +120,8 @@ const OnBoarding = () => {
                     Bienvenue dans action
                   </Typography>
                 </div>
-                <div className="col-12 text-center my-3 mt-md-5 d-flex align-items-center">
-                  <Typography variant="h6" gutterBottom className="no-bold">
+                <div className="col-12 col-md-6 offset-md-3 text-center my-3 mt-md-5 px-md-5 d-flex align-items-center">
+                  <Typography variant="h6" gutterBottom className="no-bold text-center m-auto">
                     Cette plateforme est une progressive web app, ce qui signifie que si tu l'ajoutes sur ton écran d'accueil mobile, elle se comportera comme une application classique.
                   </Typography>
                 </div>
@@ -132,7 +133,7 @@ const OnBoarding = () => {
                     position="static"
                     activeStep={activeStep}
                   />
-                  <div className="col-12 text-center my-3 d-flex">
+                  <div className="col-12 text-center my-3 d-flex justify-content-center">
                     <Button className={"mr-2 w-100"} variant={"contained"} onClick={handleBack}>Précédent</Button>
                     <Button className={"ml-2 w-100"} variant={"contained"} color={"primary"} onClick={() => localStorage.setItem('action-onboarding', 'true')}>
                       <Link to={'/'}>

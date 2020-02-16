@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 const AccountLink = () => (
-  <div className="absolute-top-right">
+  <div className="col-auto">
     <Link to={"/compte"}>
       <AccountCircleRoundedIcon style={{fontSize: "45px"}} className="account-link-icon"/>
     </Link>

@@ -8,8 +8,9 @@ import DateFnsUtils from '@date-io/date-fns';
 import frLocale from "date-fns/locale/fr";
 import theme from "../config/theme";
 import AppContext from "../config/appContext";
-import AppBottomNavigation from "./BottomNavigation";
+import AppBottomNavigation from "./AppBottomNavigation";
 import AccountLink from "./AccountLink";
+import Navigation from "./Navigation";
 
 const Layout = (props) => {
   const [userPosition, setUserPosition] = useState({ latitude: 44.8337080, longitude: -0.5821208, addressName:  "38 Rue Lacornée, 33000 Bordeaux France" });
@@ -42,15 +43,7 @@ const Layout = (props) => {
           <AppContext.Provider value={{userPosition: userPosition, setUserPosition: setUserPosition}}>
             <div className="my-3 my-md-5"></div>
             {props.history &&
-            <>
-              <Logo/>
-              {props.location.pathname !=='/compte' &&
-                <AccountLink/>
-              }
-              {(props.location.pathname !== '/se-connecter' && props.location.pathname !== '/s\'inscrire') &&
-              <AppBottomNavigation {...props}/>
-              }
-            </>
+              <Navigation {...props}/>
             }
             {props.children}
           </AppContext.Provider>

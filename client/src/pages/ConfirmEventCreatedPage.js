@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 const ConfirmEventCreatedPage = (props) => (
   <Layout {...props}>
-    <div className="container full-screen-page d-flex flex-column">
+    <div className="container-fluid full-screen-page d-flex flex-column">
       <div className="row h-100">
         <div className="col-12 text-center mt-5 mb-3">
           <Typography variant="h4" gutterBottom>

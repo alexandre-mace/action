@@ -7,7 +7,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const RegisterPage = (props) => (
   <Layout {...props}>
-    <div className="container min-full-screen-page">
+    <div className="container min-full-screen-page mt-md-5 pt-md-5">
       <div className="row my-3">
         <div className="col">
           <Link to="/">
@@ -16,7 +16,7 @@ const RegisterPage = (props) => (
         </div>
       </div>
       <div className="row">
-        <div className="col-12 col-md-6">
+        <div className="col-12 col-md-6 offset-md-3">
           <Register {...props}/>
         </div>
         <div className="col-12 text-center mt-3">
