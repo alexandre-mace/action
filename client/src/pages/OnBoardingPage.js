@@ -7,7 +7,7 @@ const OnBoardingPage = props => {
   return (
     <Layout {...props}>
       <OnBoarding/>
-      </Layout>
+    </Layout>
   )
 };
 export default OnBoardingPage;

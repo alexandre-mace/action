@@ -72,6 +72,7 @@ const InterestedEvents = (props) => {
               <div className={"col-12 col-md-4 mt-3"} key={index}>
                 <EventCard
                   event={event}
+                  history={props.history}
                   handleMapView={props.handleMapView}
                   distance={
                     props.userPosition

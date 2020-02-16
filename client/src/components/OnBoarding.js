@@ -36,7 +36,6 @@ const OnBoarding = () => {
   };
 
   const handleSwipe = (index) => {
-    console.log(index)
       if (index > activeStep) {
         handleNext()
       } else {
@@ -47,15 +46,17 @@ const OnBoarding = () => {
   };
 
   return (
+        <div className={"full-screen-page min-full-screen position-fixed"}>
+
         <BindKeyboardSwipeableViews
           onChangeIndex={(index) => handleSwipe(index)}
           enableMouseEvents={true}
           index={activeStep}
         >
-            <div className="container-fluid pt-md-5 h-100 min-full-screen">
+            <div className="container-fluid pt-md-5 h-100 pb-5 min-full-screen">
               <div className="row h-100">
                 <div className="col-12 text-center mt-3 mt-md-5">
-                  <Typography variant="h3" gutterBottom>
+                  <Typography variant="h4" gutterBottom>
                     Bienvenue dans action
                   </Typography>
                 </div>
@@ -66,7 +67,7 @@ const OnBoarding = () => {
                 </div>
                 <div className="col-12 text-center my-3 mt-md-5">
                   <Typography variant="h6" gutterBottom className="no-bold">
-                    Action est une plateforme d'évenement en lien avec le climat
+                    Action est une plateforme d'évenement en faveur de l'environnement
                   </Typography>
                 </div>
                 <div className="col-12 text-center mt-auto">
@@ -78,13 +79,13 @@ const OnBoarding = () => {
                     classes={{root: classes.root, dot: classes.dot}}
                   />
                   <div className="col-12 text-center my-3">
-                    <Button onClick={handleNext}>Suivant</Button>
+                    <Button variant={"contained"} color={"primary"} onClick={handleNext}>Suivant</Button>
                   </div>
                 </div>
 
               </div>
             </div>
-            <div className="container-fluid pt-md-5 d-flex flex-column h-100 min-full-screen">
+            <div className="container-fluid pt-md-5 d-flex flex-column h-100 pb-5">
               <div className="row h-100">
                 <div className="col-12 text-center mt-3 mt-md-5">
                   <Typography variant="h4" gutterBottom>
@@ -104,14 +105,14 @@ const OnBoarding = () => {
                     position="static"
                     activeStep={activeStep}
                   />
-                  <div className="col-12 text-center my-3">
-                    <Button onClick={handleBack}>Précédent</Button>
-                    <Button onClick={handleNext}>Suivant</Button>
+                  <div className="col-12 text-center my-3 d-flex">
+                    <Button className={"mr-2 w-100"} variant={"contained"} onClick={handleBack}>Précédent</Button>
+                    <Button className={"ml-2 w-100"} variant={"contained"} color={"primary"} onClick={handleNext}>Suivant</Button>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="container-fluid pt-md-5 d-flex flex-column h-100 min-full-screen">
+            <div className="container-fluid pt-md-5 d-flex flex-column h-100 pb-5">
               <div className="row h-100">
                 <div className="col-12 text-center mt-3 mt-md-5">
                   <Typography variant="h4" gutterBottom>
@@ -131,16 +132,20 @@ const OnBoarding = () => {
                     position="static"
                     activeStep={activeStep}
                   />
-                  <div className="col-12 text-center my-3">
-                    <Button onClick={handleBack}>Précédent</Button>
-                    <Link to={'/'}>
-                      <Button color={"primary"} >C'est parti !</Button>
-                    </Link>
+                  <div className="col-12 text-center my-3 d-flex">
+                    <Button className={"mr-2 w-100"} variant={"contained"} onClick={handleBack}>Précédent</Button>
+                    <Button className={"ml-2 w-100"} variant={"contained"} color={"primary"} onClick={() => localStorage.setItem('action-onboarding', 'true')}>
+                      <Link to={'/'}>
+                        C'est parti !
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </div>
             </div>
         </BindKeyboardSwipeableViews>
+        </div>
+
   )
 };
 

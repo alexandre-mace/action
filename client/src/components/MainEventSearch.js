@@ -88,6 +88,7 @@ const MainEventSearch = props => {
       <>
         <AgendaEvents
           events={filteredEvents}
+          history={props.history}
           userPosition={appContext.userPosition}
           handleMapView={handleMapView}
         />

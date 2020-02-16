@@ -24,6 +24,7 @@ import RoomRoundedIcon from '@material-ui/icons/RoomRounded';
 import {reset, retrieve, update} from "../../actions/event/update";
 import {del} from "../../actions/event/delete";
 import {authentication} from "../../utils/authentication/authentication";
+import redirectToLoginIfNoUser from "../../utils/authentication/redirectToLoginIfNoUser";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -71,6 +72,11 @@ function EventCard(props) {
   let eventDate = new Date(props.event.date.slice(0, 19));
 
   const handleInterest = (event) => {
+    if (!authentication.currentUserValue) {
+      redirectToLoginIfNoUser(props.history);
+      return;
+    }
+
     if (interests.includes(authentication.currentUserValue['@id'])) {
       let eventInterestsWithoutUser = event.interests.filter(user => user !== authentication.currentUserValue['@id']);
       props.update(event, {interests: eventInterestsWithoutUser})
@@ -80,6 +86,11 @@ function EventCard(props) {
   };
 
   const handleParticipate = (event) => {
+    if (!authentication.currentUserValue) {
+      redirectToLoginIfNoUser(props.history);
+      return;
+    }
+
     if (participants.includes(authentication.currentUserValue['@id'])) {
       let eventParticipantsWithoutUser = event.participants.filter(user => user !== authentication.currentUserValue['@id']);
       props.update(event, {participants: eventParticipantsWithoutUser})

@@ -22,8 +22,7 @@ const Layout = (props) => {
     //     })
     // }
 
-    if (!localStorage.getItem('onboarding')) {
-      localStorage.setItem('onboarding', 'true')
+    if (!localStorage.getItem('action-onboarding')) {
       props.history.push('/bienvenue')
     }
   }, []);
