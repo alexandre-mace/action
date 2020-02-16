@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {authentication} from "../../utils/authentication/authentication";
 import AppContext from "../../config/appContext";
 import {Loader} from "../Loader";
+import sortByDateAsc from "../../utils/events/sortByDateAsc";
 
 const InterestedEvents = (props) => {
   useEffect(() => {
@@ -54,14 +55,14 @@ const InterestedEvents = (props) => {
             <div className="col text-center">
               <p>
               <span className="font-weight-bold">
-                {props.events.length}
-              </span> {props.events.length === 1 ? 'évenement trouvé' : 'évenements trouvés'}
+                {events.length}
+              </span> {events.length === 1 ? 'évenement dans mon agenda' : 'évenements dans mon agenda'}
               </p>
             </div>
           </div>
           }
         <div className="row">
-        {events && events.map((event, index) => (
+        {events && sortByDateAsc(events).map((event, index) => (
             <React.Fragment key={index}>
               {(!events[index - 1] || events[index - 1] && !isSameDay(events[index - 1].date, event.date)) &&
               <div className={"col-12 text-center mt-3"}>

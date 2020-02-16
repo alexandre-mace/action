@@ -9,6 +9,7 @@ import {authentication} from "../../utils/authentication/authentication";
 import AppContext from "../../config/appContext";
 import {Loader} from "../Loader";
 import {connect} from "react-redux";
+import sortByDateDesc from "../../utils/events/sortByDateDesc";
 
 const OrganizedEvents = (props) => {
   useEffect(() => {
@@ -62,7 +63,7 @@ const OrganizedEvents = (props) => {
         </div>
         }
         <div className="row">
-          {events && events.map((event, index) => (
+          {events && sortByDateDesc(events).map((event, index) => (
             <React.Fragment key={index}>
               {(!events[index - 1] || events[index - 1] && !isSameDay(events[index - 1].date, event.date)) &&
               <div className={"col-12 text-center mt-3"}>

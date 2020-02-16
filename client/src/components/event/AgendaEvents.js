@@ -4,6 +4,7 @@ import displayMeters from "../../utils/displayMeters";
 import getDistance from "geolib/es/getDistance";
 import isSameDay from "../../utils/isSameDay";
 import NoDataSvg from "../../utils/svg/NoDataSvg";
+import sortByDateAsc from "../../utils/events/sortByDateAsc";
 
 const AgendaEvents = (props) => (
       <div className="container mt-5 bottom-navigation-padding">
@@ -39,7 +40,7 @@ const AgendaEvents = (props) => (
             </div>
           </>
           }
-          {props.events && props.events.map((event, index) => (
+          {props.events && sortByDateAsc(props.events).map((event, index) => (
             <React.Fragment key={index}>
             {(!props.events[index - 1] || props.events[index - 1] && !isSameDay(props.events[index - 1].date, event.date)) &&
               <div className={"col-12 text-center mt-3"}>
