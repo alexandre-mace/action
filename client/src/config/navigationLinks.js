@@ -13,7 +13,7 @@ export const navigationLinks = [
   },
   {
     route: 'mes-evenements',
-    label: 'Mes évenements',
+    label: 'Mes événements',
     icon: 'folder',
     private: true
   }

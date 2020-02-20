@@ -13,7 +13,7 @@ const ConfirmEventCreatedPage = (props) => (
       <div className="row h-100">
         <div className="col-12 text-center mt-5 mb-3">
           <Typography variant="h4" gutterBottom>
-            Bravo ! <br/> Votre évenement a été ajouté avec succès !
+            Bravo ! <br/> Votre événement a été ajouté avec succès !
           </Typography>
         </div>
         <div className="col-12 col-md-6 mx-auto">
@@ -32,7 +32,7 @@ const ConfirmEventCreatedPage = (props) => (
               color={"primary"}
               variant={"contained"}
             >
-              Voir mes évenement
+              Voir mes événements
             </Button>
           </Link>
         </div>

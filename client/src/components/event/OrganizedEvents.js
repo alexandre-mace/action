@@ -10,6 +10,9 @@ import AppContext from "../../config/appContext";
 import {Loader} from "../Loader";
 import {connect} from "react-redux";
 import sortByDateDesc from "../../utils/events/sortByDateDesc";
+import {Link} from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
 
 const OrganizedEvents = (props) => {
   useEffect(() => {
@@ -39,6 +42,21 @@ const OrganizedEvents = (props) => {
         </div>
       )}
 
+      <div className="container mt-5">
+        <div className="row mt-3">
+          <div className="col text-center">
+            <Link to={"/ajouter-un-evenement"}>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddCircleRoundedIcon />}
+              >
+                Ajouter un evenement
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
       {!props.loading &&
       <div className="container mt-5 bottom-navigation-padding">
         {user && events && events.length === 0 &&
@@ -47,7 +65,7 @@ const OrganizedEvents = (props) => {
             <NoDataSvg/>
           </div>
           <div className="col-12 text-center mt-3">
-            <p>Aucun évenement organisé pour l'instant</p>
+            <p>Aucun événement organisé pour l'instant</p>
           </div>
         </div>
         }
@@ -57,7 +75,7 @@ const OrganizedEvents = (props) => {
             <p>
               <span className="font-weight-bold">
                 {events.length}
-              </span> {events.length === 1 ? 'évenement organisé' : 'évenements organisés'}
+              </span> {events.length === 1 ? 'événement organisé' : 'événements organisés'}
             </p>
           </div>
         </div>
@@ -74,7 +92,7 @@ const OrganizedEvents = (props) => {
                 <EventCard
                   event={event}
                   history={props.history}
-                  handleMapView={props.handleMapView}
+                  handleMapView={appContext.handleMapView}
                   distance={
                     props.userPosition
                       ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))

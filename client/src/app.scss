@@ -26,6 +26,9 @@ button:focus {
     font-size: 1.875rem !important;
     line-height: 2.4rem !important;
 }
+.color-black {
+    color: black !important;
+}
 .color-primary {
     color: $primary-color;
 }
@@ -37,10 +40,16 @@ button:focus {
 }
 .logo-container {
 }
+.fs-60 {
+    font-size: 1.9rem !important;
+}
 span.logo {
     font-size: 30px;
     color: $primary-color;
     z-index: 10000;
+}
+span.logo:hover {
+    cursor: pointer;
 }
 .py-30 {
     padding-bottom: 30px;

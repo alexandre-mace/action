@@ -20,19 +20,6 @@ const AccountPage = props => {
             </Typography>
           </div>
         </div>
-        <div className="row mt-3">
-          <div className="col text-center">
-            <Link to={"/ajouter-un-evenement"}>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddCircleRoundedIcon />}
-              >
-                Ajouter un evenement
-              </Button>
-            </Link>
-          </div>
-        </div>
         <div className="container position-absolute-bottom-center">
           <div className="row">
           <div className="col text-center">

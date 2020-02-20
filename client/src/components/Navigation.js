@@ -9,7 +9,7 @@ const Navigation = props => (
   <>
     <div className="container">
       <div className="row align-items-center">
-        <Logo/>
+        <Logo history={props.history}/>
         <div className={"d-none d-md-block"}>
           <AppTopNavigation {...props}/>
         </div>

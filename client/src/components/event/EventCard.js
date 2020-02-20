@@ -25,6 +25,7 @@ import {reset, retrieve, update} from "../../actions/event/update";
 import {del} from "../../actions/event/delete";
 import {authentication} from "../../utils/authentication/authentication";
 import redirectToLoginIfNoUser from "../../utils/authentication/redirectToLoginIfNoUser";
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -137,15 +138,17 @@ function EventCard(props) {
             <Typography variant={"h6"} className="font-weight-light">{format(eventDate, 'HH')}h{format(eventDate, 'mm') !== 0 ? format(eventDate, 'mm') : ''}</Typography>
           </div>
           <div>
-              <Typography variant={"h5"}>
+              <Typography variant={"h6"}>
                 {props.distance ? props.distance : ''}
               </Typography>
           </div>
         </div>
         <div className={"d-flex justify-content-between align-items-center w-100"}>
-          <div onClick={() => props.handleMapView(props.event)}>
+          <IconButton
+            className={'color-black'}
+            onClick={() => props.handleMapView(props.event)}>
             <RoomRoundedIcon fontSize="large"/>
-          </div>
+          </IconButton>
           <div className="d-flex">
             {/*<IconButton className="z-index-10"*/}
             {/*            color={user && projectAlreadyBoostedChecker(props.item['@id'], user.supportedProjects) ? 'primary' : 'default'}*/}
@@ -167,7 +170,12 @@ function EventCard(props) {
               size="medium"
               onClick={() => handleParticipate(props.event)}>
               <Badge badgeContent={participants.length}>
+                {!userParticipates &&
+                <CalendarTodayIcon className={"fs-60"}/>
+                }
+                {userParticipates &&
                 <EventAvailableIcon fontSize="large"/>
+                }
               </Badge>
             </IconButton>
           </div>

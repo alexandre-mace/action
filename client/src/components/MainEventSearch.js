@@ -11,16 +11,14 @@ import AppContext from "../config/appContext";
 
 const MainEventSearch = props => {
   const [radius, setRadius] = useState(5000);
-  const [mapCenter, setMapCenter] = useState([ 44.8337080, -0.5821208]);
-  const [mapView, setMapView] = useState(false);
-  const [events, setEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const appContext = useContext(AppContext);
 
-  const filterEvents = (events, { latitude, longitude }) => {
-    return orderByDistance({latitude, longitude}, events.filter((event) => {
+  const filterEvents = (eventsToFilter, { latitude, longitude }) => {
+    return orderByDistance({latitude, longitude}, eventsToFilter.filter((event) => {
       return isPointWithinRadius(
         {latitude: event.latitude, longitude: event.longitude},
         {latitude: latitude, longitude: longitude},
@@ -35,43 +33,32 @@ const MainEventSearch = props => {
       decodeURIComponent(props.match.params.page))
   }, []);
 
-  useEffect(() => {
-    if (props.retrieved && props.retrieved['hydra:member'].length !== events.length) {
-      setEvents(props.retrieved['hydra:member']);
-      setFilteredEvents(filterEvents(props.retrieved['hydra:member'], {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
-      setLoading(false);
-    }
-  });
+  if (props.retrieved && props.retrieved['hydra:member'].length !== allEvents.length) {
+    setAllEvents(props.retrieved['hydra:member']);
+    setFilteredEvents(filterEvents(props.retrieved['hydra:member'], {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}));
+    setLoading(false);
+  }
 
   const handleUserPositionSelected = ({lat, lng}, addressName) => {
     setLoading(true);
-    setFilteredEvents(filterEvents(events, {latitude: lat, longitude: lng}));
+    setFilteredEvents(filterEvents(allEvents, {latitude: lat, longitude: lng}));
     appContext.setUserPosition({
       latitude: lat,
       longitude: lng,
       addressName: addressName
     });
-    setMapCenter([
-      lat,
-      lng
-    ]);
+    // setMapCenter([
+    //   lat,
+    //   lng
+    // ]);
     setTimeout(() => {setLoading(false)}, 800);
   };
 
   const handleChangeRadius = (radiusElement) => {
     setLoading(true);
     setRadius(radiusElement.target.value);
-    setFilteredEvents(filterEvents(events, {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
+    setFilteredEvents(filterEvents(allEvents, {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
     setTimeout(() => {setLoading(false)}, 800);
-  };
-
-  const handleMapView = event => {
-    setMapCenter([event.latitude, event.longitude])
-    setMapView(true);
-  };
-
-  const handleCloseMapView = () => {
-    setMapView(false)
   };
 
   return (
@@ -79,26 +66,21 @@ const MainEventSearch = props => {
       {(loading || props.loading) &&
       <FullScreenLoader/>
       }
+      {(!props.loading && !loading) &&
       <SearchBar
-        handleUserPositionSelected={handleUserPositionSelected}
+        handleUserPositionSelected={({lat, lng}, addressName) => handleUserPositionSelected({lat, lng}, addressName)}
         radius={radius}
         handleChangeRadius={handleChangeRadius}
       />
+      }
       {(!props.loading && !loading) &&
       <>
         <AgendaEvents
           events={filteredEvents}
           history={props.history}
           userPosition={appContext.userPosition}
-          handleMapView={handleMapView}
+          handleMapView={appContext.handleMapView}
         />
-        {mapView &&
-        <Map
-          center={mapCenter}
-          event={{latitude: mapCenter[0], longitude: mapCenter[1]}}
-          handleCloseMapView={handleCloseMapView}
-        />
-        }
       </>
       }
     </>

@@ -11,9 +11,20 @@ import AppContext from "../config/appContext";
 import AppBottomNavigation from "./AppBottomNavigation";
 import AccountLink from "./AccountLink";
 import Navigation from "./Navigation";
+import Map from "./event/LeafletMap";
 
 const Layout = (props) => {
   const [userPosition, setUserPosition] = useState({ latitude: 44.8337080, longitude: -0.5821208, addressName:  "38 Rue Lacornée, 33000 Bordeaux France" });
+  const [mapCenter, setMapCenter] = useState([ 44.8337080, -0.5821208]);
+  const [mapView, setMapView] = useState(false);
+
+  const handleMapView = event => {
+    setMapCenter([event.latitude, event.longitude]);
+    setMapView(true);
+  };
+  const handleCloseMapView = () => {
+    setMapView(false)
+  };
 
   useEffect(() => {
     // if (authentication.currentUserValue) {
@@ -40,12 +51,26 @@ const Layout = (props) => {
     // }
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={frLocale}>
-          <AppContext.Provider value={{userPosition: userPosition, setUserPosition: setUserPosition}}>
+          <AppContext.Provider value={
+            { userPosition: userPosition,
+              setUserPosition: setUserPosition,
+              mapView: mapView,
+              handleMapView: handleMapView,
+              mapCenter: mapCenter,
+              handleCloseMapView: handleCloseMapView }
+          }>
             <div className="my-3 my-md-5"></div>
             {props.history &&
               <Navigation {...props}/>
             }
             {props.children}
+            {mapView &&
+            <Map
+              center={mapCenter}
+              event={{latitude: mapCenter[0], longitude: mapCenter[1]}}
+              handleCloseMapView={handleCloseMapView}
+            />
+            }
           </AppContext.Provider>
         </MuiPickersUtilsProvider>
       </ThemeProvider>

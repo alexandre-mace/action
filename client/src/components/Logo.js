@@ -1,8 +1,8 @@
 import React from "react";
 
-const Logo = () => (
+const Logo = (props) => (
       <div className="col w-100">
-        <span className="logo">Action</span>
+        <span className="logo" onClick={() => props.history.push('/')}>Action</span>
       </div>
 );
 export default Logo;

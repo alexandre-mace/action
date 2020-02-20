@@ -39,7 +39,7 @@ const WizardEventFormFirstPage = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <Typography variant={"h5"}>Titre de votre évenement</Typography>
+        <Typography variant={"h5"}>Titre de votre événement</Typography>
       </div>
       <div className={"mt-3"}>
         <Field

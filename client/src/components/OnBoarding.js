@@ -68,7 +68,7 @@ const OnBoarding = () => {
                 </div>
                 <div className="col-12 text-center my-3 mt-md-5">
                   <Typography variant="h6" gutterBottom className="no-bold text-center m-auto">
-                    Action est une plateforme d'évenement en faveur de l'environnement
+                    Action est une plateforme d'événements en faveur de l'environnement
                   </Typography>
                 </div>
                 <div className="col-12 text-center mt-auto">
@@ -95,7 +95,7 @@ const OnBoarding = () => {
                 </div>
                 <div className="col-12 text-center my-3 mt-md-5 d-flex align-items-center">
                   <Typography variant="h6" gutterBottom className="no-bold text-center m-auto">
-                    Si tu veux organiser ou participer à un évenement en faveur de l'écologie, tu es au bon endroit 😄.
+                    Si tu veux organiser ou participer à un événement en faveur de l'écologie, tu es au bon endroit 😄.
                   </Typography>
                 </div>
                 <div className="col-12 text-center mt-auto">

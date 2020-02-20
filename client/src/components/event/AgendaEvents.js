@@ -11,7 +11,7 @@ const AgendaEvents = (props) => (
         <div className="row">
           <div className="col text-center">
             <p>
-              Recherche de d'évenement à proximité de <br/>
+              Recherche de d'événement à proximité de <br/>
               <span className="font-weight-bold">
                 {props.userPosition.addressName}
               </span>
@@ -24,7 +24,7 @@ const AgendaEvents = (props) => (
             <p>
               <span className="font-weight-bold">
                 {props.events.length}
-              </span> {props.events.length === 1 ? 'évenement trouvé' : 'évenements trouvés'}
+              </span> {props.events.length === 1 ? 'événement trouvé' : 'événements trouvés'}
             </p>
           </div>
         </div>
@@ -36,7 +36,7 @@ const AgendaEvents = (props) => (
               <NoDataSvg/>
             </div>
             <div className="col-12 text-center mt-3">
-              <p>Il n'y a pas encore d'évenements organisés proche de votre localisation</p>
+              <p>Il n'y a pas encore d'événements organisés proche de votre localisation</p>
             </div>
           </>
           }

@@ -46,7 +46,7 @@ const InterestedEvents = (props) => {
               <NoDataSvg/>
             </div>
             <div className="col-12 text-center mt-3">
-              <p>Vous n'avez pas encore indiqué que vous étiez intéressé ou que vous participez à un évenement</p>
+              <p>Vous n'avez pas encore indiqué que vous étiez intéressé ou que vous participez à un événement</p>
             </div>
           </div>
           }
@@ -56,7 +56,7 @@ const InterestedEvents = (props) => {
               <p>
               <span className="font-weight-bold">
                 {events.length}
-              </span> {events.length === 1 ? 'évenement dans mon agenda' : 'évenements dans mon agenda'}
+              </span> {events.length === 1 ? 'événement dans mon agenda' : 'événements dans mon agenda'}
               </p>
             </div>
           </div>
@@ -73,7 +73,7 @@ const InterestedEvents = (props) => {
                 <EventCard
                   event={event}
                   history={props.history}
-                  handleMapView={props.handleMapView}
+                  handleMapView={appContext.handleMapView}
                   distance={
                     props.userPosition
                       ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))

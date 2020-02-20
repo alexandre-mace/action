@@ -129,7 +129,7 @@ class Form extends Component {
         />
         {!this.props.loading &&
         <Button color="primary" type="submit" variant="contained">
-          Ajouter l'évenement
+          Ajouter l'événement
         </Button>
         }
         {this.props.loading &&

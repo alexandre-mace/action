@@ -6,6 +6,7 @@ import LeafletMarker from "./LeafletMarker";
 import LeafletAnimatedMarker from "./LeafletAnimatedMarker";
 import CloseIcon from '@material-ui/icons/Close';
 import { Animate }  from 'react-simple-animate';
+import IconButton from "@material-ui/core/IconButton";
 
 // defaults
 let zoom = 13;
@@ -54,8 +55,14 @@ const LeafletMap = (props) => {
       }
     </Map>
       <div className={"map-close"}>
-        <CloseIcon fontSize={"large"} onClick={() => handleCloseMapView()}/>
-      </div>
+        <IconButton
+          className={'color-black'}
+          onClick={() => handleCloseMapView()}
+        >
+          <CloseIcon fontSize={"large"}/>
+        </IconButton>
+
+    </div>
     </Animate>
   </div>
   )
