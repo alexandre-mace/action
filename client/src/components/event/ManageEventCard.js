@@ -122,6 +122,9 @@ function EventCard(props) {
             <div className={"d-none d-md-flex"}>
               <Typography variant={"body1"} >{props.event.description}</Typography>
             </div>
+            <div>
+              <Typography variant={"body1"} className="mt-2 font-weight-light">{props.event.address}</Typography>
+            </div>
           </div>
         </CardContent>
       </Link>
@@ -129,51 +132,31 @@ function EventCard(props) {
       <CardActions className={'mt-auto d-flex flex-column pt-0'} disableSpacing>
         <div className={"d-flex justify-content-between align-items-center w-100 px-2"}>
           <div>
+            <Typography variant={"h6"}>
+              {props.distance ? props.distance : ''}
+            </Typography>
+          </div>
+        </div>
+        <div className={"d-flex justify-content-between align-items-center w-100"}>
+          <div>
             {/*<Typography variant={"h6"} className="font-weight-bold">{format(eventDate, 'dd')}/{format(eventDate, 'MM')}</Typography>*/}
             <Typography variant={"h6"} className="font-weight-light">{format(eventDate, 'HH')}h{format(eventDate, 'mm') !== 0 ? format(eventDate, 'mm') : ''}</Typography>
           </div>
           <div>
-              <Typography variant={"h6"}>
-                {props.distance ? props.distance : ''}
-              </Typography>
-          </div>
-        </div>
-        <div className={"d-flex justify-content-between align-items-center w-100"}>
           <IconButton
-            className={'color-black'}
-            onClick={() => props.handleMapView(props.event)}>
-            <RoomRoundedIcon fontSize="large"/>
+            className={"color-black"}
+            size="medium"
+            onClick={() => props.updateEvent(props.event)}>
+            <EditRoundedIcon fontSize="large"/>
           </IconButton>
-          <div className="d-flex">
-            {/*<IconButton className="z-index-10"*/}
-            {/*            color={user && projectAlreadyBoostedChecker(props.item['@id'], user.supportedProjects) ? 'primary' : 'default'}*/}
-            {/*            aria-label="add to favorites"*/}
-            {/*            onClick={() => props.handleBoost(props.item)}>*/}
-            {/*  <Badge badgeContent={props.item['likes']}>*/}
-            {/*    <FavoriteIcon />*/}
-            {/*  </Badge>*/}
-            <IconButton
-              color={userInterested ? 'primary' : 'secondary'}
-              size="medium"
-              onClick={() => handleInterest(props.event)}>
-              <Badge badgeContent={interests.length}>
-                <BookmarkIcon fontSize="large"/>
-              </Badge>
-            </IconButton>
-            <IconButton
-              color={'primary'}
-              size="medium"
-              onClick={() => handleParticipate(props.event)}>
-              <Badge badgeContent={participants.length}>
-                {!userParticipates &&
-                <CalendarTodayIcon className={"fs-60"}/>
-                }
-                {userParticipates &&
-                <EventAvailableIcon fontSize="large"/>
-                }
-              </Badge>
-            </IconButton>
+          <IconButton
+            className={'color-red'}
+            size="medium"
+            onClick={() => props.deleteEvent(props.event)}>
+            <DeleteForeverRoundedIcon fontSize="large"/>
+          </IconButton>
           </div>
+
         </div>
       </CardActions>
     </Card>

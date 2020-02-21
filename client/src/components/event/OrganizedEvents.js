@@ -13,6 +13,8 @@ import sortByDateDesc from "../../utils/events/sortByDateDesc";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
+import { del } from '../../actions/event/delete';
+import ManageEventCard from "./ManageEventCard";
 
 const OrganizedEvents = (props) => {
   useEffect(() => {
@@ -25,6 +27,17 @@ const OrganizedEvents = (props) => {
   if (user) {
     events = user.organizedEvents
   }
+
+  const deleteEvent = (event) => {
+    if (window.confirm('Voulez-vous vraiment supprimer cet événement'))
+      props.del(event).then(() => {
+        props.retrieve(authentication.currentUserValue['@id']);
+      });
+  };
+
+  const updateEvent = (event) => {
+    props.history.push(`/events/edit/${encodeURIComponent(event['@id'])}`)
+  };
 
   const appContext = useContext(AppContext);
 
@@ -89,10 +102,12 @@ const OrganizedEvents = (props) => {
               </div>
               }
               <div className={"col-12 col-md-4 mt-3"} key={index}>
-                <EventCard
+                <ManageEventCard
                   event={event}
                   history={props.history}
                   handleMapView={appContext.handleMapView}
+                  deleteEvent={deleteEvent}
+                  updateEvent={updateEvent}
                   distance={
                     props.userPosition
                       ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))
@@ -114,10 +129,14 @@ const mapStateToProps = state => ({
   error: state.user.show.error,
   loading: state.user.show.loading,
   eventSource: state.user.show.eventSource,
+  deleteError: state.event.del.error,
+  deleteLoading: state.event.del.loading,
+  deleted: state.event.del.deleted,
 });
 
 const mapDispatchToProps = dispatch => ({
-  retrieve: id => dispatch(retrieve(id))
+  retrieve: id => dispatch(retrieve(id)),
+  del: item => dispatch(del(item))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrganizedEvents);

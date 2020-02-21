@@ -95,9 +95,8 @@ const SearchInput = (props) => {
   const id = open ? 'simple-popover' : undefined;
   return (
     <ThemeProvider theme={theme}>
-
             <AlgoliaPlaces
-              placeholder="Adresse du lieu"
+              placeholder={props.placeholder ? props.placeholder : "Adresse du lieu"}
               options={{
                 appId: 'plXZW2RVWB96',
                 apiKey: '8432eadb718c9d4714a8beb933d71483',
@@ -106,7 +105,6 @@ const SearchInput = (props) => {
                 type: 'address',
                 useDeviceLocation: true
               }}
-
               onChange={({query, rawAnswer, suggestion, suggestionIndex}) => {
                 props.onChange(suggestion.name + ', ' + suggestion.postcode + ' ' + suggestion.city);
                 props.setPosition(suggestion.latlng)

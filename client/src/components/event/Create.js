@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Form from './Form';
 import { create, reset } from '../../actions/event/create';
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 class Create extends Component {
   static propTypes = {
@@ -40,6 +41,13 @@ class Create extends Component {
 
         <div className="container mt-5 pt-md-5">
           <div className="row">
+            <div className="col">
+              <Link to="/mes-evenements">
+                <ArrowBackIcon/>
+              </Link>
+            </div>
+          </div>
+          <div className="row mt-5">
             <div className="col">
               <Form loading={this.props.loading} onSubmit={this.props.create} values={this.props.item} />
             </div>

@@ -58,6 +58,10 @@ export function updateSuccess(updated) {
 }
 
 export function update(item, values) {
+  if (values['date'] && typeof values.date === 'string') {
+    values['date'] = values['date'].replace(/\//g, '-')
+  }
+
   return dispatch => {
     dispatch(updateError(null));
     dispatch(createSuccess(null));

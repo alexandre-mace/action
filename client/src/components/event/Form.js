@@ -31,7 +31,7 @@ class Form extends Component {
 
     let currentDateValue = new Date()
     if (data.type === 'dateTime') {
-      if (typeof data.input.value === 'string' && data.input.value !== "") {
+      if (typeof data.input.value === 'string' && data.input.value !== "" && !this.props.update) {
         let date = data.input.value.split(' ')[0];
         let time = data.input.value.split(' ')[1];
         let year = parseInt(date.split('/')[2]);
@@ -42,6 +42,9 @@ class Form extends Component {
 
         currentDateValue = new Date(year, month - 1, day, hour, minute, 0)
       }
+    }
+    if (data.type === "address") {
+      console.log(data)
     }
 
     return (
@@ -87,6 +90,7 @@ class Form extends Component {
             {...data.input}
             label={data.label}
             setPosition={this.setPosition}
+            placeholder={data.input.value ? data.input.value : false}
           />
         }
         {isInvalid && <div className="invalid-feedback">{data.meta.error}</div>}
@@ -129,7 +133,7 @@ class Form extends Component {
         />
         {!this.props.loading &&
         <Button color="primary" type="submit" variant="contained">
-          Ajouter l'événement
+          {this.props.update ? "Enregistrer les modifications" : "Ajouter l'événement"}
         </Button>
         }
         {this.props.loading &&
