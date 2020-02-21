@@ -115,7 +115,10 @@ function EventCard(props) {
         <CardHeader
           classes={{title: classes.title}}
           title={`${props.event.name.substring(0, 60)} ${props.event.name.length > 58 ? '...' : ''}`}
-          subheader={''}
+          subheader={<div className={"d-flex w-100 justify-content-between"}>
+            <div>{props.event.interests.length} {props.event.interests.length > 1 ? "intéressés" : "intéressé"}</div>
+            <div>{props.event.participants.length} {props.event.participants.length > 1 ? "participants" : "participant"}</div>
+          </div>}
         />
         <CardContent classes={{root: classes.root}} className={"pb-0 pb-md-3"}>
           <div className="d-flex flex-column w-100">
@@ -130,13 +133,6 @@ function EventCard(props) {
       </Link>
 
       <CardActions className={'mt-auto d-flex flex-column pt-0'} disableSpacing>
-        <div className={"d-flex justify-content-between align-items-center w-100 px-2"}>
-          <div>
-            <Typography variant={"h6"}>
-              {props.distance ? props.distance : ''}
-            </Typography>
-          </div>
-        </div>
         <div className={"d-flex justify-content-between align-items-center w-100"}>
           <div>
             {/*<Typography variant={"h6"} className="font-weight-bold">{format(eventDate, 'dd')}/{format(eventDate, 'MM')}</Typography>*/}
