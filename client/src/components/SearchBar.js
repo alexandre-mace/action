@@ -128,8 +128,8 @@ const SearchBar = (props) => {
               open={open}
               anchorEl={anchorEl}
               onClose={handleClose}
-              anchorReference="anchorPosition"
-              anchorPosition={{ top: 140, left: 15 }}
+              className={"mt-3"}
+              anchorReference="anchorEl"
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'center',

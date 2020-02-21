@@ -102,6 +102,9 @@ span.logo:hover {
 }
 .search-settings-container {
     width: calc(100vw - 15px) !important;
+    @media (min-width: 768px) {
+        width: auto !important;
+    }
 }
 .search-settings-button {
     border-top-left-radius: unset !important;
