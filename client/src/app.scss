@@ -134,6 +134,7 @@ span.logo:hover {
 }
 .full-screen-map {
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100vw;
     position: fixed;
     display: block;
@@ -144,6 +145,7 @@ span.logo:hover {
 }
 .leaflet-container {
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100vw;
 }
 .show-password {
@@ -177,6 +179,7 @@ span.logo:hover {
 
 .events-container {
     height: 34vh;
+    height: calc(var(--vh, 1vh) * 34);
     & > div {
         height: 100%;
     }
@@ -214,7 +217,9 @@ span.logo:hover {
     background-color: $secondary-color;
     z-index: 10000;
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -229,6 +234,7 @@ svg {
 }
 .min-full-screen {
     min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
 }
 .absolute-center {
     position: absolute;

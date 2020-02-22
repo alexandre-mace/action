@@ -31,6 +31,13 @@ import OrganizedEventsPage from "./pages/OrganizedEventsPage";
 import ConfirmRegistrationPage from "./pages/ConfirmRegistrationPage";
 import ConfirmEventCreatedPage from "./pages/ConfirmEventCreatedPage";
 
+window.addEventListener('resize', () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
 const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL
 });
