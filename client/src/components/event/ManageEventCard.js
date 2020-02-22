@@ -111,7 +111,7 @@ function EventCard(props) {
 
   return (
     <Card key={props.event['@id']} className={classes.card}>
-      <Link to={`les-projets/${encodeURIComponent(props.event['@id'])}`}>
+      <Link to={`/events/show/${encodeURIComponent(props.event['@id'])}`}>
         <CardHeader
           classes={{title: classes.title}}
           title={`${props.event.name.substring(0, 60)} ${props.event.name.length > 58 ? '...' : ''}`}

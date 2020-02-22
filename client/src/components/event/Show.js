@@ -1,143 +1,187 @@
-import React, { Component } from 'react';
+import React, {Component, useContext, useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { retrieve, reset } from '../../actions/event/show';
 import { del } from '../../actions/event/delete';
+import {Loader} from "../Loader";
+import {Badge, Typography} from "@material-ui/core";
+import format from "date-fns/format";
+import IconButton from "@material-ui/core/IconButton";
+import RoomRoundedIcon from "@material-ui/icons/RoomRounded";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import CardActions from "@material-ui/core/CardActions";
+import {authentication} from "../../utils/authentication/authentication";
+import redirectToLoginIfNoUser from "../../utils/authentication/redirectToLoginIfNoUser";
+import {update} from "../../actions/event/update";
+import AppContext from "../../config/appContext";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import displayMeters from "../../utils/displayMeters";
+import getDistance from "geolib/es/getDistance";
+import EventCard from "./EventCard";
 
-class Show extends Component {
-  static propTypes = {
-    retrieved: PropTypes.object,
-    loading: PropTypes.bool.isRequired,
-    error: PropTypes.string,
-    eventSource: PropTypes.instanceOf(EventSource),
-    retrieve: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-    deleteError: PropTypes.string,
-    deleteLoading: PropTypes.bool.isRequired,
-    deleted: PropTypes.object,
-    del: PropTypes.func.isRequired
-  };
+function Show(props) {
+  const [interests, setInterests] = useState([]);
+  const [participants, setParticipants] = useState([]);
 
-  componentDidMount() {
-    this.props.retrieve(decodeURIComponent(this.props.match.params.id));
-  }
+  useEffect(() => {
+    props.retrieve(decodeURIComponent(props.match.params.id));
+  }, []);
 
-  componentWillUnmount() {
-    this.props.reset(this.props.eventSource);
-  }
+  const appContext = useContext(AppContext);
 
-  del = () => {
-    if (window.confirm('Are you sure you want to delete this item?'))
-      this.props.del(this.props.retrieved);
-  };
+  const item = props.retrieved;
 
-  render() {
-    if (this.props.deleted) return <Redirect to=".." />;
-
-    const item = this.props.retrieved;
-
-    return (
-      <div>
-        <h1>Show {item && item['@id']}</h1>
-
-        {this.props.loading && (
-          <div className="alert alert-info" role="status">
-            Loading...
-          </div>
-        )}
-        {this.props.error && (
-          <div className="alert alert-danger" role="alert">
-            <span className="fa fa-exclamation-triangle" aria-hidden="true" />{' '}
-            {this.props.error}
-          </div>
-        )}
-        {this.props.deleteError && (
-          <div className="alert alert-danger" role="alert">
-            <span className="fa fa-exclamation-triangle" aria-hidden="true" />{' '}
-            {this.props.deleteError}
-          </div>
-        )}
-
-        {item && (
-          <table className="table table-responsive table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Field</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">name</th>
-                <td>{item['name']}</td>
-              </tr>
-              <tr>
-                <th scope="row">date</th>
-                <td>{item['date']}</td>
-              </tr>
-              <tr>
-                <th scope="row">description</th>
-                <td>{item['description']}</td>
-              </tr>
-              <tr>
-                <th scope="row">totalInterested</th>
-                <td>{item['totalInterested']}</td>
-              </tr>
-              <tr>
-                <th scope="row">totalParticipant</th>
-                <td>{item['totalParticipant']}</td>
-              </tr>
-              <tr>
-                <th scope="row">address</th>
-                <td>{item['address']}</td>
-              </tr>
-            </tbody>
-          </table>
-        )}
-        <Link to=".." className="btn btn-primary">
-          Back to list
-        </Link>
-        {item && (
-          <Link to={`/events/edit/${encodeURIComponent(item['@id'])}`}>
-            <button className="btn btn-warning">Edit</button>
-          </Link>
-        )}
-        <button onClick={this.del} className="btn btn-danger">
-          Delete
-        </button>
-      </div>
-    );
-  }
-
-  renderLinks = (type, items) => {
-    if (Array.isArray(items)) {
-      return items.map((item, i) => (
-        <div key={i}>{this.renderLinks(type, item)}</div>
-      ));
+  const handleInterest = (event) => {
+    if (!authentication.currentUserValue) {
+      redirectToLoginIfNoUser(props.history);
+      return;
     }
 
-    return (
-      <Link to={`../../${type}/show/${encodeURIComponent(items)}`}>
-        {items}
-      </Link>
-    );
+    if (interests.includes(authentication.currentUserValue['@id'])) {
+      let eventInterestsWithoutUser = event.interests.filter(user => user !== authentication.currentUserValue['@id']);
+      props.update(event, {interests: eventInterestsWithoutUser})
+    } else {
+      props.update(event, {interests: [...event.interests, authentication.currentUserValue['@id']]})
+    }
   };
+
+  const handleParticipate = (event) => {
+    if (!authentication.currentUserValue) {
+      redirectToLoginIfNoUser(props.history);
+      return;
+    }
+
+    if (participants.includes(authentication.currentUserValue['@id'])) {
+      let eventParticipantsWithoutUser = event.participants.filter(user => user !== authentication.currentUserValue['@id']);
+      props.update(event, {participants: eventParticipantsWithoutUser})
+    } else {
+      props.update(event, {participants: [...event.participants, authentication.currentUserValue['@id']]})
+    }
+  };
+
+  const userInterested = authentication.currentUserValue
+    ? interests.includes(authentication.currentUserValue['@id'])
+    : false;
+  const userParticipates = authentication.currentUserValue
+    ? participants.includes(authentication.currentUserValue['@id'])
+    : false;
+
+  let eventDate = new Date();
+  let distance = false;
+
+  if (item) {
+    eventDate = new Date(item.date.slice(0, 19));
+
+    if (props.updated && props.updated['@id'] === item['@id'] && interests.length !== props.updated.interests.length) {
+      setInterests(props.updated.interests)
+    }
+    if (props.updated && props.updated['@id'] === item['@id'] && participants.length !== props.updated.participants.length) {
+      setParticipants(props.updated.participants)
+    }
+
+    distance = appContext.userPosition
+      ? displayMeters(getDistance({ latitude: item.latitude, longitude: item.longitude} , {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
+      : false;
+  }
+
+  return (
+    <div>
+      {props.loading && (
+        <Loader/>
+      )}
+      {props.error && (
+        <div className="alert alert-danger" role="alert">
+          <span className="fa fa-exclamation-triangle" aria-hidden="true" />{' '}
+          {props.error}
+        </div>
+      )}
+
+      {item && (
+        <div className="container mt-5 pt-md-5">
+          <div className="row">
+            <div className="col">
+                <IconButton  onClick={() => props.history.goBack()} className={"color-white"}>
+                  <ArrowBackIcon/>
+                </IconButton>
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className={"col text-center"}>
+              <Typography variant={"h6"} className="font-weight-bold">{format(eventDate, 'dd')}/{format(eventDate, 'MM')}</Typography>
+              <Typography variant={"h6"} className="font-weight-light">{format(eventDate, 'HH')}h{format(eventDate, 'mm') !== 0 ? format(eventDate, 'mm') : ''}</Typography>
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className="col">
+              <Typography variant={"h5"} >{item.name}</Typography>
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className="col">
+              <Typography variant={"body1"} >{item.description}</Typography>
+            </div>
+          </div>
+          <div className="row mt-5">
+            <div className={"d-flex justify-content-between align-items-center w-100 px-2"}>
+              <div>
+                <Typography variant={"h6"}>
+                  {distance ? distance : ''}
+                </Typography>
+              </div>
+            </div>
+            <div className={"d-flex justify-content-between align-items-center w-100"}>
+              <IconButton
+                className={'color-white'}
+                onClick={() => appContext.handleMapView(item)}>
+                <RoomRoundedIcon fontSize="large"/>
+              </IconButton>
+              <div className="d-flex">
+                <IconButton
+                  color={userInterested ? 'primary' : 'secondary'}
+                  size="medium"
+                  onClick={() => handleInterest(item)}>
+                  <Badge badgeContent={interests.length}>
+                    <BookmarkIcon fontSize="large"/>
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  color={'primary'}
+                  size="medium"
+                  onClick={() => handleParticipate(item)}>
+                  <Badge badgeContent={participants.length}>
+                    {!userParticipates &&
+                    <CalendarTodayIcon className={"fs-60"}/>
+                    }
+                    {userParticipates &&
+                    <EventAvailableIcon fontSize="large"/>
+                    }
+                  </Badge>
+                </IconButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({
   retrieved: state.event.show.retrieved,
+  updateError: state.event.update.updateError,
+  updateLoading: state.event.update.updateLoading,
   error: state.event.show.error,
   loading: state.event.show.loading,
   eventSource: state.event.show.eventSource,
-  deleteError: state.event.del.error,
-  deleteLoading: state.event.del.loading,
-  deleted: state.event.del.deleted
+  updated: state.event.update.updated
 });
 
 const mapDispatchToProps = dispatch => ({
   retrieve: id => dispatch(retrieve(id)),
-  del: item => dispatch(del(item)),
+  update: (item, values) => dispatch(update(item, values)),
   reset: eventSource => dispatch(reset(eventSource))
 });
 

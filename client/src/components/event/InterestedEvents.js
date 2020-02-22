@@ -75,8 +75,8 @@ const InterestedEvents = (props) => {
                   history={props.history}
                   handleMapView={appContext.handleMapView}
                   distance={
-                    props.userPosition
-                      ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))
+                    appContext.userPosition
+                      ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
                       : false
                   }
                 />

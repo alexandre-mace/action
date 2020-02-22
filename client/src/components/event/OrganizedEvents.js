@@ -109,8 +109,8 @@ const OrganizedEvents = (props) => {
                   deleteEvent={deleteEvent}
                   updateEvent={updateEvent}
                   distance={
-                    props.userPosition
-                      ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: props.userPosition.latitude, longitude: props.userPosition.longitude}))
+                    appContext.userPosition
+                      ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
                       : false
                   }
                 />
