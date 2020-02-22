@@ -10,6 +10,7 @@ import {authentication} from "../../utils/authentication/authentication";
 import AppContext from "../../config/appContext";
 import {Loader} from "../Loader";
 import sortByDateAsc from "../../utils/events/sortByDateAsc";
+import {Animate} from "react-simple-animate";
 
 const InterestedEvents = (props) => {
   useEffect(() => {
@@ -53,11 +54,9 @@ const InterestedEvents = (props) => {
           {events && events.length > 0 &&
           <div className="row">
             <div className="col text-center">
-              <p>
               <span className="font-weight-bold">
                 {events.length}
               </span> {events.length === 1 ? 'événement dans mon agenda' : 'événements dans mon agenda'}
-              </p>
             </div>
           </div>
           }
@@ -70,19 +69,29 @@ const InterestedEvents = (props) => {
               </div>
               }
               <div className={"col-12 col-md-4 mt-3"} key={index}>
-                <EventCard
-                  event={event}
-                  history={props.history}
-                  handleMapView={appContext.handleMapView}
-                  distance={
-                    appContext.userPosition
-                      ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
-                      : false
-                  }
-                />
+                <Animate
+                  play={true} // set play true to start the animation
+                  duration={0.6} // how long is the animation duration
+                  delay={index * 0.1} // how many delay seconds will apply before the animation start
+                  start={{ transform: 'translate(0, 400px)' }}
+                  end={{ transform: 'translate(0, 0)' }}
+                  easeType="cubic-bezier(0.445, 0.05, 0.55, 0.95)"
+                  onComplete={() => {}} // call back function when animation is completed
+                >
+                  <EventCard
+                    event={event}
+                    history={props.history}
+                    handleMapView={appContext.handleMapView}
+                    distance={
+                      appContext.userPosition
+                        ? displayMeters(getDistance({ latitude:event.latitude, longitude: event.longitude} , {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
+                        : false
+                    }
+                  />
+                </Animate>
               </div>
             </React.Fragment>
-          ))}
+        ))}
         </div>
       </div>
       }
