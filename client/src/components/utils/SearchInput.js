@@ -64,7 +64,7 @@ const SearchInput = (props) => {
   return (
     <ThemeProvider theme={theme}>
             <AlgoliaPlaces
-              placeholder={props.placeholder ? props.placeholder : "Adresse du lieu"}
+              placeholder={props.placeholder ? props.placeholder : "Adresse du lieu (utilisez les propositions)"}
               options={{
                 appId: 'plXZW2RVWB96',
                 apiKey: '8432eadb718c9d4714a8beb933d71483',

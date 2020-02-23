@@ -27,14 +27,16 @@ const ConfirmEventCreatedPage = (props) => (
           </Typography>
         </div>
         <div className="col-12 mt-3 text-center">
-          <Link to={`/mes-evenements`}>
             <Button
               color={"primary"}
               variant={"contained"}
+              onClick={() => {
+                props.reset();
+                props.history.push('/mes-evenements')
+              }}
             >
               Voir mes événements
             </Button>
-          </Link>
         </div>
       </div>
     </div>
