@@ -1,7 +1,8 @@
 import * as Yup from 'yup';
 
 import WizardUserFormFirstPage from "../../components/auth/molecules/WizardUserFormFirstPage";
-import WizardUserFormThirdPage from "../../components/auth/molecules/WizardUserFormSecondPage";
+import WizardUserFormThirdPage from "../../components/auth/molecules/WizardUserFormThirdPage";
+import WizardFormSecondPage from "../../components/auth/molecules/WizardFormSecondPage";
 
 export default [
   {
@@ -17,6 +18,16 @@ export default [
       email: Yup.string()
         .email('L\'addresse email est invalide')
         .required('L\'email est requis'),
+    }),
+  },
+  {
+    id: 'contact',
+    component: WizardFormSecondPage,
+    initialValues: {
+      contactPhone: '',
+      contactEmail: ''
+    },
+    validationSchema: Yup.object().shape({
     }),
   },
   {

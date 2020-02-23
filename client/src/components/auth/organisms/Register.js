@@ -35,7 +35,7 @@ function RegisterFormWrapper({
       <div className={"d-flex justify-content-around"}>
         {(canGoBack && !isSubmitting) &&
         <>
-          <div className="mt-3 w-100" onClick={goToPreviousStep}>
+          <div className="mt-1 mb-3 w-100" onClick={goToPreviousStep}>
             <Button className={"w-100"} variant={"contained"} color={'secondary'}>Précedent</Button>
           </div>
           <div className="mx-3"></div>
@@ -46,7 +46,7 @@ function RegisterFormWrapper({
             <LinearProgress/>
           </div>
         ) : (
-          <div className="mt-3 w-100 text-center">
+          <div className="mt-1 mb-3 w-100 text-center">
             <Button
               type="submit"
               variant={"contained"}
