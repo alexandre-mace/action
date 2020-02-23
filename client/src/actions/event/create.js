@@ -1,6 +1,6 @@
 import { SubmissionError } from 'redux-form';
 import { fetch } from '../../utils/dataAccess';
-import {authentication} from "../../utils/authentication/authentication";
+import {authentication} from "../../utils/auth/authentication";
 
 export function error(error) {
   return { type: 'EVENT_CREATE_ERROR', error };
