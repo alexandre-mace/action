@@ -24,8 +24,8 @@ export default [
     id: 'contact',
     component: WizardFormSecondPage,
     initialValues: {
-      contactPhone: '',
-      contactEmail: ''
+      contactEmail: '',
+      contactPhone: ''
     },
     validationSchema: Yup.object().shape({
     }),

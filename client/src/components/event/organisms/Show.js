@@ -83,6 +83,10 @@ function Show(props) {
       : false;
   }
 
+  if (item) {
+    console.log(item.organizator)
+  }
+
   return (
     <div>
       {props.loading && (
@@ -118,6 +122,35 @@ function Show(props) {
           <div className="row mt-3">
             <div className="col">
               <Typography variant={"body1"} >{item.description}</Typography>
+            </div>
+          </div>
+          <div className="row mt-5">
+            <div className="col-12">
+              <Typography variant="h6" gutterBottom>
+                Contact
+              </Typography>
+            </div>
+            <div className="col-12">
+              <Typography variant="body1" gutterBottom>
+                Email : {item.organizator.contactEmail ? item.organizator.contactEmail : "Non défini"}
+              </Typography>
+            </div>
+            <div className="col-12">
+              <Typography variant="body1" gutterBottom>
+                Tel : {item.organizator.contactPhone ? item.organizator.contactPhone : "Non défini"}
+              </Typography>
+            </div>
+          </div>
+          <div className="row mt-5">
+            <div className="col-12">
+              <Typography variant="h6" gutterBottom>
+                Adresse
+              </Typography>
+            </div>
+            <div className="col-12">
+              <Typography variant="body1" gutterBottom>
+                {item.address}
+              </Typography>
             </div>
           </div>
           <div className="row mt-5">

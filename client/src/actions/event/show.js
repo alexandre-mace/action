@@ -2,7 +2,7 @@ import {
   fetch,
   extractHubURL,
   normalize,
-  mercureSubscribe as subscribe
+  mercureSubscribe as subscribe, normalizeProperties
 } from '../../utils/dataAccess';
 
 export function error(error) {
@@ -28,7 +28,9 @@ export function retrieve(id) {
           .then(retrieved => ({ retrieved, hubURL: extractHubURL(response) }))
       )
       .then(({ retrieved, hubURL }) => {
+        const organizator = retrieved.organizator;
         retrieved = normalize(retrieved);
+        retrieved.organizator = organizator;
 
         dispatch(loading(false));
         dispatch(success(retrieved));

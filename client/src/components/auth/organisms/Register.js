@@ -66,9 +66,15 @@ const Register = (props) => {
     const body = JSON.parse(JSON.stringify(values));
     body.name = values.ids.name;
     body.email = values.ids.email;
+    body.contactEmail = values.contact['contactEmail'];
+    body.contactPhone = values.contact['contactPhone'];
     body.password = values.password['password'];
 
-     return fetch('/users', { method: 'POST', body: JSON.stringify(body, ['name', 'email', 'password'], 4)  })
+     return fetch('/users',
+{
+          method: 'POST',
+          body: JSON.stringify(body, ['name', 'email', 'password', "contactEmail", "contactPhone"], 4)
+        })
        .then((response) => {
            return authentication.login(values.ids.email, values.password['password'])
              .then(
