@@ -4,6 +4,7 @@ import AccountLink from "./AccountLink";
 import AppBottomNavigation from "./AppBottomNavigation";
 import AppTopNavigation from "./AppTopNavigation";
 import HomeLink from "./HomeLink";
+import {authentication} from "../../utils/auth/authentication";
 
 const Navigation = props => (
   <>
@@ -13,7 +14,7 @@ const Navigation = props => (
         <div className={"d-none d-md-block"}>
           <AppTopNavigation {...props}/>
         </div>
-        {props.location.pathname !=='/compte' &&
+        {authentication.currentUserValue && props.location.pathname !=='/compte' &&
         <AccountLink/>
         }
         {props.location.pathname ==='/compte' &&

@@ -1,9 +1,7 @@
-import React, {Component, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { retrieve, reset } from '../../../actions/event/show';
-import { del } from '../../../actions/event/delete';
+import Button from '@material-ui/core/Button';
 import {Loader} from "../../utils/Loader";
 import {Badge, Typography} from "@material-ui/core";
 import format from "date-fns/format";
@@ -137,27 +135,35 @@ function Show(props) {
                 <RoomRoundedIcon fontSize="large"/>
               </IconButton>
               <div className="d-flex">
-                <IconButton
+                <Button
+                  variant="contained"
+                  className={"py-3"}
                   color={userInterested ? 'primary' : 'secondary'}
-                  size="medium"
-                  onClick={() => handleInterest(item)}>
-                  <Badge badgeContent={interests.length}>
-                    <BookmarkIcon fontSize="large"/>
-                  </Badge>
-                </IconButton>
-                <IconButton
+                  endIcon={
+                    <Badge badgeContent={interests.length}>
+                      <BookmarkIcon fontSize="large"/>
+                    </Badge>
+                  }
+                  onClick={() => handleInterest(item)}
+                >
+                  Intéressé
+                </Button>
+                <Button
+                  variant={"contained"}
                   color={'primary'}
-                  size="medium"
+                  className={"ml-3 py-3"}
+                  endIcon={
+                    <Badge badgeContent={participants.length}>
+                      {!userParticipates &&
+                      <CalendarTodayIcon className={"fs-60"}/>
+                      }
+                      {userParticipates &&
+                      <EventAvailableIcon fontSize="large"/>
+                      }                    </Badge>
+                  }
                   onClick={() => handleParticipate(item)}>
-                  <Badge badgeContent={participants.length}>
-                    {!userParticipates &&
-                    <CalendarTodayIcon className={"fs-60"}/>
-                    }
-                    {userParticipates &&
-                    <EventAvailableIcon fontSize="large"/>
-                    }
-                  </Badge>
-                </IconButton>
+                  Participe
+                </Button>
               </div>
             </div>
           </div>

@@ -77,12 +77,12 @@ const DiscoverEvents = props => {
               <p>
                 Recherche de d'événement à proximité de <br/>
                 <span className="font-weight-bold">
-                  {props.userPosition.addressName}
+                  {appContext.userPosition.addressName}
                 </span>
               </p>
             </div>
           </div>
-          {props.events && props.events.length > 0 &&
+          {filteredEvents && filteredEvents > 0 &&
           <div className="row">
             <div className="col text-center">
               <p>
@@ -94,7 +94,7 @@ const DiscoverEvents = props => {
           </div>
           }
           <div className="row">
-            {props.events.length === 0 &&
+            {filteredEvents.length === 0 &&
             <>
               <div className="col-12 text-center mt-3">
                 <NoDataSvg/>

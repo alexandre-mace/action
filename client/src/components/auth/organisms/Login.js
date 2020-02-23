@@ -33,7 +33,7 @@ class Login extends React.Component {
                 <AuthenticationSvg/>
               </div>
               <Typography className={"mt-3"} variant={"h5"}>
-                Se connecter à Seed
+                Se connecter
               </Typography>
                 <Formik
                     initialValues={{
