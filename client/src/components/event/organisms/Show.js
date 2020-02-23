@@ -121,20 +121,22 @@ function Show(props) {
             </div>
           </div>
           <div className="row mt-5">
-            <div className={"d-flex justify-content-between align-items-center w-100 px-2"}>
-              <div>
-                <Typography variant={"h6"}>
-                  {distance ? distance : ''}
-                </Typography>
+            <div className={"col-12 d-flex justify-content-between align-items-center w-100 flex-wrap"}>
+              <div className={"col-12 col-md-auto p-0 d-flex flex-column text-center"}>
+                <div>
+                  <Typography variant={"h6"}>
+                    {distance ? distance : ''}
+                  </Typography>
+                </div>
+                <div>
+                <IconButton
+                  className={'color-white'}
+                  onClick={() => appContext.handleMapView(item)}>
+                  <RoomRoundedIcon fontSize="large"/>
+                </IconButton>
+                </div>
               </div>
-            </div>
-            <div className={"d-flex justify-content-between align-items-center w-100"}>
-              <IconButton
-                className={'color-white'}
-                onClick={() => appContext.handleMapView(item)}>
-                <RoomRoundedIcon fontSize="large"/>
-              </IconButton>
-              <div className="d-flex">
+              <div className="col-12 mt-3 mt-md-0 col-md-auto d-flex justify-content-center">
                 <Button
                   variant="contained"
                   className={"py-3"}
