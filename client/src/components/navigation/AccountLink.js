@@ -2,15 +2,12 @@ import React from "react";
 import {Link} from "react-router-dom";
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import Button from "@material-ui/core/Button";
-import {Badge} from "@material-ui/core";
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
-import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 
-const AccountLink = () => (
+const AccountLink = (props) => (
   <div className="col-auto pl-md-0">
     <Link to={"/compte"}>
       <Button
-        variant={"contained"}
+        variant={props.pathname === '/compte' ? "contained" : "text"}
         color={'primary'}
         className={"d-none d-md-flex"}
         endIcon={

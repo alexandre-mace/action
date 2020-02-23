@@ -14,11 +14,10 @@ const Navigation = props => (
         <div className={"d-none d-md-block"}>
           <AppTopNavigation {...props}/>
         </div>
-        {authentication.currentUserValue && props.location.pathname !=='/compte' &&
-        <AccountLink/>
-        }
-        {props.location.pathname ==='/compte' &&
-        <HomeLink/>
+        {authentication.currentUserValue &&
+        <AccountLink
+          pathname={props.location.pathname}
+        />
         }
       </div>
     </div>
