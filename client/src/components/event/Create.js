@@ -25,9 +25,6 @@ class Create extends Component {
         <Redirect
           to={`/confirmation-evenement-ajouté`}
         />
-        // <Redirect
-        //   to={`edit/${encodeURIComponent(this.props.created['@id'])}`}
-        // />
       );
 
     return (

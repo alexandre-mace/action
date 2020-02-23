@@ -20,16 +20,16 @@ import eventRoutes from './routes/event';
 import user from './reducers/user/';
 import userRoutes from './routes/user';
 import './app.scss';
-import HomePage from "./pages/HomePage";
-import AccountPage from "./pages/AccountPage";
-import OnBoardingPage from "./pages/OnBoardingPage";
-import {PrivateRoute} from "./utils/PrivateRoute";
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
-import InterestedEventsPage from "./pages/InterestedEventsPage";
-import OrganizedEventsPage from "./pages/OrganizedEventsPage";
-import ConfirmRegistrationPage from "./pages/ConfirmRegistrationPage";
-import ConfirmEventCreatedPage from "./pages/ConfirmEventCreatedPage";
+import DiscoverEventsPage from "./pages/event/DiscoverEventsPage";
+import AccountPage from "./pages/user/AccountPage";
+import OnBoardingPage from "./pages/onboarding/OnBoardingPage";
+import {PrivateRoute} from "./utils/security/PrivateRoute";
+import RegisterPage from "./pages/auth/RegisterPage";
+import LoginPage from "./pages/auth/LoginPage";
+import InterestedEventsPage from "./pages/event/InterestedEventsPage";
+import OrganizedEventsPage from "./pages/event/OrganizedEventsPage";
+import ConfirmRegistrationPage from "./pages/auth/ConfirmRegistrationPage";
+import ConfirmEventCreatedPage from "./pages/event/ConfirmEventCreatedPage";
 
 window.addEventListener('resize', () => {
   let vh = window.innerHeight * 0.01;
@@ -66,7 +66,7 @@ ReactDOM.render(
         <Route path="/confirmation-inscription" component={ConfirmRegistrationPage} />
         <Route path="/confirmation-evenement-ajouté" component={ConfirmEventCreatedPage} />
         <Route path="/bienvenue" component={OnBoardingPage} />
-        <Route path="/" component={HomePage}/>
+        <Route path="/" component={DiscoverEventsPage}/>
         <Route render={() => <h1>Not Found</h1>} />
       </Switch>
     </ConnectedRouter>

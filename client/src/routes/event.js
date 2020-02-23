@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { List, Create, Update, Show } from '../components/event/';
-import CreateEventPage from "../pages/CreateEventPage";
-import UpdateEventPage from "../pages/UpdateEventPage";
-import ShowEventPage from "../pages/ShowEventPage";
+import CreateEventPage from "../pages/event/CreateEventPage";
+import UpdateEventPage from "../pages/event/UpdateEventPage";
+import ShowEventPage from "../pages/event/ShowEventPage";
 
 export default [
   <Route path="/ajouter-un-evenement" component={CreateEventPage} exact key="initiate" />,

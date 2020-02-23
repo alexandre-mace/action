@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Form from './Form';
 import { retrieve, update, reset } from '../../actions/event/update';
 import { del } from '../../actions/event/delete';
-import {Loader} from "../Loader";
+import {Loader} from "../utils/Loader";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 class Update extends Component {

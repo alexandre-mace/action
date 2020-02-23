@@ -14,13 +14,18 @@ export function success(created) {
   return { type: 'EVENT_CREATE_SUCCESS', created };
 }
 
-export function create(values) {
-
+function formatValues(values) {
   if (values['date'] && typeof values.date === 'string') {
     values['date'] = values['date'].replace(/\//g, '-')
   }
 
   values['organizator'] = authentication.currentUserValue['@id'];
+
+  return values
+}
+
+export function create(values) {
+  values = formatValues(values);
 
   return dispatch => {
     dispatch(loading(true));

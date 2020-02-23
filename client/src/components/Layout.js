@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from 'react';
-// import Header from "./Header.jsx";
 import {ThemeProvider} from '@material-ui/styles';
 import {connect} from "react-redux";
-import Logo from "./Logo";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import frLocale from "date-fns/locale/fr";
 import theme from "../config/theme";
 import AppContext from "../config/appContext";
-import AppBottomNavigation from "./AppBottomNavigation";
-import AccountLink from "./AccountLink";
-import Navigation from "./Navigation";
-import Map from "./event/LeafletMap";
+import Navigation from "./navigation/Navigation";
+import Map from "./map/LeafletMap";
 
 const Layout = (props) => {
   const [userPosition, setUserPosition] = useState({ latitude: 44.8337080, longitude: -0.5821208, addressName:  "38 Rue Lacornée, 33000 Bordeaux France" });
@@ -27,20 +23,13 @@ const Layout = (props) => {
   };
 
   useEffect(() => {
-    // if (authentication.currentUserValue) {
-    //   this.props.retrieve(authentication.currentUserValue['@id'])
-    //     .then(() => {
-    //       this.props.setAuthenticated(true);
-    //     })
-    // }
-
     if (!localStorage.getItem('action-onboarding')) {
       props.history.push('/bienvenue')
     }
   }, []);
 
   return (
-    // const user = this.props.authenticated ? (this.props.updated ? this.props.updated : this.props.retrieved) : false;
+    // const user = this.props.updated ? this.props.updated : this.props.retrieved) : false;
     //
     // let notifications = 0;
     //
@@ -63,7 +52,9 @@ const Layout = (props) => {
             {props.history &&
               <Navigation {...props}/>
             }
-            {props.children}
+            <div className={"bottom-navigation-padding"}>
+              {props.children}
+            </div>
             {mapView &&
             <Map
               center={mapCenter}

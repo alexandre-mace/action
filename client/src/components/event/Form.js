@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { DateTimePicker } from "@material-ui/pickers";
-import SearchInput from "../SearchInput";
+import SearchInput from "../utils/SearchInput";
 import {LinearProgress} from "@material-ui/core";
 
 class Form extends Component {
@@ -29,7 +29,8 @@ class Form extends Component {
       data.input.className += ' is-valid';
     }
 
-    let currentDateValue = new Date()
+    let currentDateValue = new Date();
+
     if (data.type === 'dateTime') {
       if (typeof data.input.value === 'string' && data.input.value !== "" && !this.props.update) {
         let date = data.input.value.split(' ')[0];
@@ -42,9 +43,6 @@ class Form extends Component {
 
         currentDateValue = new Date(year, month - 1, day, hour, minute, 0)
       }
-    }
-    if (data.type === "address") {
-      console.log(data)
     }
 
     return (
