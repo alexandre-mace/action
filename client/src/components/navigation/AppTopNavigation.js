@@ -17,7 +17,7 @@ const AppTopNavigation = props => (
     })}
     {!authentication.currentUserValue &&
     <Link to={`/se-connecter`}>
-      <Button className={"ml-3"} color={'primary'}>Se connecter</Button>
+      <Button className={"ml-3"} variant={props.location.pathname === "/se-connecter"? "contained" : "text"} color={'primary'}>Se connecter</Button>
     </Link>
     }
   </div>
