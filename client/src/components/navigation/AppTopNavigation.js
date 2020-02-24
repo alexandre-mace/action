@@ -1,5 +1,5 @@
 import React from "react";
-import {navigationLinks} from "../../config/navigationLinks";
+import {navigationLinks} from "../../config/navigation/navigationLinks";
 import {authentication} from "../../utils/auth/authentication";
 import {Link} from "react-router-dom";
 import Button from '@material-ui/core/Button';

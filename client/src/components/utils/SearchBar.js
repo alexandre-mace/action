@@ -9,12 +9,13 @@ import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import {createMuiTheme, makeStyles} from "@material-ui/core/styles";
 import {ThemeProvider} from "@material-ui/styles";
+import {COLOR_PRIMARY, COLOR_SECONDARY} from "../../config/project";
 
 let theme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: "#38d39f"
+      main: COLOR_PRIMARY
     },
     secondary: {
       main: "rgba(255, 255, 255, 0.15)"
@@ -50,14 +51,14 @@ let theme = createMuiTheme({
         color: "#e6e6e6"
       },
       containedPrimary: {
-        color: "#39374E",
-        backgroundColor: "#38d39f"
+        color: COLOR_SECONDARY,
+        backgroundColor: COLOR_PRIMARY
       }
     },
     MuiCheckbox: {
       colorSecondary: {
         '&.Mui-checked': {
-          color: '#38d39f'
+          color: COLOR_PRIMARY
         }
       }
     },

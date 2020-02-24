@@ -5,12 +5,13 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {navigationLinks} from "../../config/navigationLinks";
+import {navigationLinks} from "../../config/navigation/navigationLinks";
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import {authentication} from "../../utils/auth/authentication";
 import BookmarksRoundedIcon from '@material-ui/icons/BookmarksRounded';
 import FolderSharedRoundedIcon from '@material-ui/icons/FolderSharedRounded';
 import EventRoundedIcon from '@material-ui/icons/EventRounded';
+import {COLOR_SECONDARY} from "../../config/project";
 
 const useStyles = makeStyles({
     root: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
         color: '#a3a3a3',
         fontWeight: 500,
         '& .Mui-selected, &.Mui-selected .MuiSvgIcon-root': {
-            color: '#39374E',
+            color: COLOR_SECONDARY,
         },
         padding: "3px 10px"
     }

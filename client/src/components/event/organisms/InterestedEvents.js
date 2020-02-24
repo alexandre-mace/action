@@ -3,7 +3,7 @@ import NoDataSvg from "../../../utils/svg/NoDataSvg";
 import {reset, retrieve} from "../../../actions/user/show";
 import {connect} from "react-redux";
 import {authentication} from "../../../utils/auth/authentication";
-import AppContext from "../../../config/appContext";
+import AppContext from "../../../config/context/appContext";
 import {Loader} from "../../utils/Loader";
 import EventsAgenda from "../molecules/EventsAgenda";
 

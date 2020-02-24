@@ -4,8 +4,8 @@ import {connect} from "react-redux";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import frLocale from "date-fns/locale/fr";
-import theme from "../config/theme";
-import AppContext from "../config/appContext";
+import theme from "../config/ui/theme";
+import AppContext from "../config/context/appContext";
 import Navigation from "./navigation/Navigation";
 import Map from "./map/LeafletMap";
 

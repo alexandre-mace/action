@@ -5,6 +5,12 @@ import {MobileStepper, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import { bindKeyboard } from 'react-swipeable-views-utils';
+import {
+  PROJECT_DESCRIPTION,
+  PROJECT_NAME,
+  PROJECT_ONBOARDING_SECOND_STEP,
+  PROJECT_ONBOARDING_THIRD_STEP
+} from "../../config/project";
 
 const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 
@@ -67,7 +73,7 @@ const OnBoarding = () => {
             </div>
             <div className="col-12 text-center my-3 mt-md-5">
               <Typography variant="h6" gutterBottom className="no-bold text-center m-auto">
-                Action est une plateforme d'événements en faveur de l'environnement
+                {PROJECT_DESCRIPTION}
               </Typography>
             </div>
             <div className="col-12 text-center mt-auto">
@@ -89,12 +95,12 @@ const OnBoarding = () => {
           <div className="row h-100">
             <div className="col-12 text-center mt-3 mt-md-5">
               <Typography variant="h4" gutterBottom>
-                Bienvenue dans action
+                Bienvenue dans {PROJECT_NAME}
               </Typography>
             </div>
             <div className="col-12 text-center my-3 mt-md-5 d-flex align-items-center">
               <Typography variant="h6" gutterBottom className="no-bold text-center m-auto">
-                Si tu veux organiser ou participer à un événement en faveur de l'écologie, tu es au bon endroit 😄.
+                {PROJECT_ONBOARDING_SECOND_STEP}
               </Typography>
             </div>
             <div className="col-12 text-center mt-auto">
@@ -116,12 +122,12 @@ const OnBoarding = () => {
           <div className="row h-100">
             <div className="col-12 text-center mt-3 mt-md-5">
               <Typography variant="h4" gutterBottom>
-                Bienvenue dans action
+                Bienvenue dans {PROJECT_NAME}
               </Typography>
             </div>
             <div className="col-12 col-md-6 offset-md-3 text-center my-3 mt-md-5 px-md-5 d-flex align-items-center">
               <Typography variant="h6" gutterBottom className="no-bold text-center m-auto">
-                Cette plateforme est une progressive web app, ce qui signifie que si tu l'ajoutes sur ton écran d'accueil mobile, elle se comportera comme une application classique.
+                {PROJECT_ONBOARDING_THIRD_STEP}
               </Typography>
             </div>
             <div className="col-12 text-center mt-auto">

@@ -4,7 +4,7 @@ import getDistance from "geolib/es/getDistance";
 import sortByDateDesc from "../../../utils/agenda/sortByDateDesc";
 import ManageEventCard from "../atoms/ManageEventCard";
 import AgendaDay from "../atoms/AgendaDay";
-import AppContext from "../../../config/appContext";
+import AppContext from "../../../config/context/appContext";
 
 const ManageEvents = (props) => {
   const appContext = useContext(AppContext);

@@ -13,7 +13,7 @@ import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import {authentication} from "../../../utils/auth/authentication";
 import redirectToLoginIfNoUser from "../../../utils/security/redirectToLoginIfNoUser";
 import {update} from "../../../actions/event/update";
-import AppContext from "../../../config/appContext";
+import AppContext from "../../../config/context/appContext";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import displayMeters from "../../../utils/geocoding/displayMeters";
 import getDistance from "geolib/es/getDistance";

@@ -6,7 +6,7 @@ import FullScreenLoader from "../../utils/FullScreenLoader";
 import EventsAgenda from "../molecules/EventsAgenda";
 import {list, reset} from "../../../actions/event/list";
 import {connect} from "react-redux";
-import AppContext from "../../../config/appContext";
+import AppContext from "../../../config/context/appContext";
 import NoDataSvg from "../../../utils/svg/NoDataSvg";
 
 const DiscoverEvents = props => {

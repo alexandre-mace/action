@@ -1,3 +1,10 @@
-export const PROJECT_NAME = process.env.PROJECT_NAME;
-export const COLOR_PRIMARY = process.env.COLOR_PRIMARY;
-export const COLOR_SECONDARY = process.env.COLOR_SECONDARY;
+import styles from '../assets/scss/variables.scss'
+
+export const PROJECT_NAME = "Action";
+export const PROJECT_DESCRIPTION = PROJECT_NAME + " est une plateforme qui regroupe les événements en faveur de l'environnement";
+export const PROJECT_ONBOARDING_SECOND_STEP = "Si tu veux organiser ou participer à un événement en faveur de l'écologie, tu es au bon endroit 😄.";
+export const PROJECT_ONBOARDING_THIRD_STEP = "Cette plateforme est une progressive web app, ce qui signifie que si tu l'ajoutes sur ton écran d'accueil mobile, elle se comportera comme une application classique.";
+
+// colors are meant to be set in variables.scss file
+export const COLOR_PRIMARY = styles.primaryColor;
+export const COLOR_SECONDARY = styles.secondaryColor;
