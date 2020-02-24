@@ -12,7 +12,6 @@ import NoDataSvg from "../../../utils/svg/NoDataSvg";
 const DiscoverEvents = props => {
   const [radius, setRadius] = useState(5000);
   const [allEvents, setAllEvents] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const appContext = useContext(AppContext);
@@ -35,13 +34,11 @@ const DiscoverEvents = props => {
 
   if (props.retrieved && props.retrieved['hydra:member'].length !== allEvents.length) {
     setAllEvents(props.retrieved['hydra:member']);
-    setFilteredEvents(filterEvents(props.retrieved['hydra:member'], {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}));
     setLoading(false);
   }
 
   const handleUserPositionSelected = ({lat, lng}, addressName) => {
     setLoading(true);
-    setFilteredEvents(filterEvents(allEvents, {latitude: lat, longitude: lng}));
     appContext.setUserPosition({
       latitude: lat,
       longitude: lng,
@@ -53,9 +50,10 @@ const DiscoverEvents = props => {
   const handleChangeRadius = (radiusElement) => {
     setLoading(true);
     setRadius(radiusElement.target.value);
-    setFilteredEvents(filterEvents(allEvents, {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude}))
     setTimeout(() => {setLoading(false)}, 800);
   };
+
+  const events = filterEvents(allEvents, {latitude: appContext.userPosition.latitude, longitude: appContext.userPosition.longitude});
 
   return (
     <>
@@ -82,7 +80,7 @@ const DiscoverEvents = props => {
               </p>
             </div>
           </div>
-          {filteredEvents && filteredEvents > 0 &&
+          {events && events > 0 &&
           <div className="row">
             <div className="col text-center">
               <p>
@@ -94,7 +92,7 @@ const DiscoverEvents = props => {
           </div>
           }
           <div className="row">
-            {filteredEvents.length === 0 &&
+            {events.length === 0 &&
             <>
               <div className="col-12 text-center mt-3">
                 <NoDataSvg/>
@@ -107,7 +105,7 @@ const DiscoverEvents = props => {
           </div>
         </div>
         <EventsAgenda
-          events={filteredEvents}
+          events={events}
           history={props.history}
           userPosition={appContext.userPosition}
           handleMapView={appContext.handleMapView}
