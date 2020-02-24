@@ -4,14 +4,23 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Behavior\Timestampable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={
+ *         "normalization_context"={"groups"={"user:read"}, "enable_max_depth"=true},
+ *     },
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="app_user")
  * @UniqueEntity("email")
@@ -19,10 +28,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  */
 class User implements UserInterface
 {
+    use Timestampable;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"user:read"})
      */
     private $id;
 
@@ -30,11 +42,13 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email
      * @Assert\NotBlank
+     * @Groups({"user:read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:read"})
      */
     private $roles = [];
 
@@ -42,24 +56,55 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank
+     * @Groups({"user:read"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Groups({"user:read", "event:read"})
      */
     private $name;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="interests")
+     * @Groups({"user:read"})
+     * @MaxDepth(1)
      */
-    private $eventsToParticipate = [];
+    private $interestedEvents;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="participants")
+     * @Groups({"user:read"})
+     * @MaxDepth(1)
      */
-    private $eventsInterestedIn = [];
+    private $participatedEvents;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="organizator")
+     * @Groups({"user:read"})
+     */
+    private $organizedEvents;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user:read", "event:read"})
+     */
+    private $contactEmail;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user:read", "event:read"})
+     */
+    private $contactPhone;
+
+    public function __construct()
+    {
+        $this->interestedEvents = new ArrayCollection();
+        $this->participatedEvents = new ArrayCollection();
+        $this->organizedEvents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -151,26 +196,113 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getEventsToParticipate(): ?array
+    /**
+     * @return Collection|Event[]
+     */
+    public function getInterestedEvents(): Collection
     {
-        return $this->eventsToParticipate;
+        return $this->interestedEvents;
     }
 
-    public function setEventsToParticipate(array $eventsToParticipate): self
+    public function addInterestedEvent(Event $interestedEvent): self
     {
-        $this->eventsToParticipate = $eventsToParticipate;
+        if (!$this->interestedEvents->contains($interestedEvent)) {
+            $this->interestedEvents[] = $interestedEvent;
+            $interestedEvent->addInterest($this);
+        }
 
         return $this;
     }
 
-    public function getEventsInterestedIn(): ?array
+    public function removeInterestedEvent(Event $interestedEvent): self
     {
-        return $this->eventsInterestedIn;
+        if ($this->interestedEvents->contains($interestedEvent)) {
+            $this->interestedEvents->removeElement($interestedEvent);
+            $interestedEvent->removeInterest($this);
+        }
+
+        return $this;
     }
 
-    public function setEventsInterestedIn(array $eventsInterestedIn): self
+    /**
+     * @return Collection|Event[]
+     */
+    public function getParticipatedEvents(): Collection
     {
-        $this->eventsInterestedIn = $eventsInterestedIn;
+        return $this->participatedEvents;
+    }
+
+    public function addParticipatedEvent(Event $participatedEvent): self
+    {
+        if (!$this->participatedEvents->contains($participatedEvent)) {
+            $this->participatedEvents[] = $participatedEvent;
+            $participatedEvent->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipatedEvent(Event $participatedEvent): self
+    {
+        if ($this->participatedEvents->contains($participatedEvent)) {
+            $this->participatedEvents->removeElement($participatedEvent);
+            $participatedEvent->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getOrganizedEvents(): Collection
+    {
+        return $this->organizedEvents;
+    }
+
+    public function addOrganizedEvent(Event $organizedEvent): self
+    {
+        if (!$this->organizedEvents->contains($organizedEvent)) {
+            $this->organizedEvents[] = $organizedEvent;
+            $organizedEvent->setOrganizator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganizedEvent(Event $organizedEvent): self
+    {
+        if ($this->organizedEvents->contains($organizedEvent)) {
+            $this->organizedEvents->removeElement($organizedEvent);
+            // set the owning side to null (unless already changed)
+            if ($organizedEvent->getOrganizator() === $this) {
+                $organizedEvent->setOrganizator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getContactEmail(): ?string
+    {
+        return $this->contactEmail;
+    }
+
+    public function setContactEmail(?string $contactEmail): self
+    {
+        $this->contactEmail = $contactEmail;
+
+        return $this;
+    }
+
+    public function getContactPhone(): ?string
+    {
+        return $this->contactPhone;
+    }
+
+    public function setContactPhone(?string $contactPhone): self
+    {
+        $this->contactPhone = $contactPhone;
 
         return $this;
     }
